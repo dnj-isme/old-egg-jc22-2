@@ -1,0 +1,188 @@
+$hover-color: #ccc;
+$debug-color-1: lime;
+$debug-color-2: cyan;
+$height: 3rem;
+$anim: all 0.2s;
+
+.navbar {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+  }
+
+  div div, div a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0rem 0.5rem;
+  }
+  
+  .left{
+    width: 100%;
+
+    .hamburger {
+      transition: all 0.1s;
+      cursor: pointer;
+      border-radius: 100%;
+      padding: 0.5rem;
+      font-size: $height;
+    }
+
+    .hamburger:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .company {
+      height: $height;
+    }
+
+    .address {
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 10rem;
+      display: flex;
+
+      .icon {
+        font-size: 2rem;
+      }
+
+      .text {
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: baseline;
+
+        .select_address {
+          font-weight: bolder;
+        }
+      }
+    }
+
+    .address:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .search {
+      // display: flex;
+      position: relative;
+      // min-width: 2rem;
+      // max-width: 100vw;
+      width: 100%;
+
+      .input {
+        border-radius: 20rem;
+        min-width: 10rem;
+        width: 100%;
+        height: $height;
+      }
+
+      .submit {
+        padding: 0.2rem 1rem;
+        border-radius: 20rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: $height;
+        .icon {
+          font-size: 1.6rem
+        }
+      }
+    }
+  }
+
+  .right {
+    .bell {
+      font-size: 2rem;
+      cursor: pointer;
+      border-radius: 100%;
+      padding: 0.2rem;
+      border: black solid 0.1px;
+    }
+
+    .bell:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .language {
+      font-size: 2rem;
+      cursor: pointer;
+      border-radius: 100%;
+      padding: 0.2rem;
+      border: black solid 0.1px;
+    }
+
+    .language:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .user {
+      cursor: pointer;
+      border-radius: 10rem;
+      padding: 0.2rem;
+
+      .icon{
+        font-size: 2rem;
+      }
+
+      .text {
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+
+        .action {
+          font-weight: bolder;
+        }
+      }
+    }
+
+    .user:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .return_order {
+      cursor: pointer;
+
+      padding: 0.2rem 1.2rem;
+      border-radius: 10rem;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+      
+      .order {
+        font-weight: bolder;
+      }
+    }
+
+    .return_order:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+
+    .cart {
+      font-size: $height;
+      border-radius: 100%;
+      padding: 0.4rem;
+      cursor: pointer;
+    }
+
+    .cart:hover {
+      transition: $anim;
+      background-color: $hover-color;
+    }
+  }
+}

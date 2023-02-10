@@ -1,4 +1,3 @@
-import "@/styles/index.module.scss"
 import {useState, useEffect} from 'react'
 import AccountAuthentication from '../controller/AccountAuthentication'
 import { Account, AccountRole } from '../model/Account'

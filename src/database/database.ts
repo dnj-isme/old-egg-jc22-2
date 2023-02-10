@@ -1,32 +1,40 @@
-import axios from "axios";
+import { Account } from "@/model/Account";
 import { Query } from "./query";
 // import cors from "cors"
 
 export const Database = (function() {
   const endpoint = "http://localhost:8080/query"
-
-  async function execute(query: string, variables: {}) {
-    
-    const headers = {
-      'Access-Control-Allow-Origin': 'http://localhost:3000',
-      'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-      'Access-Control-Allow-Credentials': 'true',
-      "Access-Control-Allow-Methods": "GET,POST",
-    }
-    const data = {
-      query,
-      variables
-    }
-
-    const result = await axios.post(endpoint, data, {headers});
-    
-    return {
-      raw_result: result,
-      data: result.data.data
-    }
-  }
   
+  async function execute(operationName: string, query: string, variables: {}) {
+    const headers = {
+      "content-type": "application/json",
+    };
+    const graphqlQuery = { operationName, query, variables };
+
+    const options = {
+      "method": "POST",
+      "headers": headers,
+      "body": JSON.stringify(graphqlQuery)
+    };
+
+    const response = await fetch(endpoint, options);
+    const data = (await response.json()).data[operationName]
+    const output = {
+      data,
+      isEmpty: Object.values(data).every(x => x === null || x === '' || !x)
+    }
+    return output
+  }
+
+  async function signIn(email: string, password: string) : Promise<Account | undefined> {
+    
+    const res = await execute("attemptLogin", Query.login_example, {email, password});
+    if(res.isEmpty) return undefined
+    
+    return res.data
+  }
+
   return {
-    execute
+    signIn
   }
 })()
