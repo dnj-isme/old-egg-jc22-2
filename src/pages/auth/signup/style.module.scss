@@ -1,0 +1,53 @@
+.base {
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  padding: 30px;
+
+  form {
+    * {
+      margin-bottom: 0.5rem;
+    }
+    input, button {
+      font-size: 15px;
+      padding: 12px 15px;
+      width: 20rem;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .submit {
+      border-color: #d60;
+      background-color: #ffa33a;
+      color: #222;
+      font-weight: bolder;
+    }
+
+    .submit:hover {
+      background-color: #ff8800;
+    }
+    .pass_error {
+      display: flex;
+      justify-content: space-evenly;
+      .container {
+        display: flex;
+
+        .pass_element {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+.inline {
+  display: inline;
+}
+
+.checkbox {
+  width: auto !important;
+}

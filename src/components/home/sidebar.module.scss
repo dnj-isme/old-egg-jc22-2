@@ -1,0 +1,21 @@
+.sidebar {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  margin-left: 3rem;
+  width: fit-content;
+
+  a {
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.8rem 0.8rem;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+}

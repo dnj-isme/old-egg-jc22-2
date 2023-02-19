@@ -2,12 +2,16 @@ $hover-color: #ccc;
 $debug-color-1: lime;
 $debug-color-2: cyan;
 $height: 3rem;
+$width: 5rem;
 $anim: all 0.2s;
 
 .navbar {
+  color: black;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 
   padding: 0.5rem 1rem;
   display: flex;
@@ -22,6 +26,7 @@ $anim: all 0.2s;
     align-items: center;
     justify-content: center;
     margin: 0rem 0.5rem;
+    text-decoration: none;
   }
   
   .left{
@@ -93,6 +98,7 @@ $anim: all 0.2s;
         right: 0;
         top: 0;
         height: $height;
+        width: $width;
         .icon {
           font-size: 1.6rem
         }
@@ -183,6 +189,23 @@ $anim: all 0.2s;
     .cart:hover {
       transition: $anim;
       background-color: $hover-color;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .navbar .address .text {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .navbar {
+    div div, div a {
+      margin: 0rem 0.2rem;
+    }
+    .user .text{
+      display: none !important;
     }
   }
 }
