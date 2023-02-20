@@ -1,13 +1,14 @@
 import { From } from "@/database/api";
-import { Account, AccountContext } from "@/contexts/AccountContext";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import {useEffect, useState} from 'react';
+import { Account } from "@/model/account";
 
 export interface ProtectionParameter {
   MustLogin?: boolean,
   MustLogout?: boolean
-  MustAdmin?: boolean
+  MustAdmin?: boolean,
+  MustBusiness?: boolean,
   children: any
 }
 
@@ -54,32 +55,35 @@ export const Auth = (function() {
   function Protection(props: ProtectionParameter): JSX.Element | null {
     const router = useRouter()
 
-    const [account, setAccount] = useState<Account | null>(null)
-
     useEffect(() => {fetchAccount()}, []);
     async function fetchAccount() {
-      setAccount(await getActiveAccount())
+      const account = await getActiveAccount()
+      if(props.MustLogout && account != null) {
+        router.push("/");
+        return null      
+      }
+  
+      if(props.MustLogin && account == null) {
+        router.push("/login")
+        return null
+      }
+      else if(props.MustLogin && !account?.verified) {
+        router.push("/login")
+        return null
+      }
+      else if(props.MustBusiness && !account?.admin) {
+        global.unauthorized = true;
+        router.push("/")
+        return null;
+      }
+      else if(props.MustAdmin && !account?.admin) {
+        global.unauthorized = true;
+        router.push("/")
+        return null;
+      }
     }
 
-    if(props.MustLogout && account != null) {
-      router.push("/");
-      return null      
-    }
-
-    if(props.MustLogin && account == null) {
-      router.push("/login")
-      return null
-    }
-    else if(props.MustAdmin && !account?.admin) {
-      global.unauthorized = true;
-      router.push("/")
-      return null;
-    }
-    return (
-      <AccountContext.Provider value={account}>
-        {props.children}
-      </AccountContext.Provider>
-    )
+    return (props.children)
   }
 
   function logout() {

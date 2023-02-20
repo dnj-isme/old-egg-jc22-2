@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 export interface Account {
   id: string,
   first_name: string,
@@ -8,10 +6,10 @@ export interface Account {
   email: string,
   phone: string,
   subscribe: boolean
+  verified: boolean
+  business: boolean
 }
 
 export function isAccount(object: any): object is Account {
   return object.id;
 }
-
-export const AccountContext = createContext<Account | null>(null)

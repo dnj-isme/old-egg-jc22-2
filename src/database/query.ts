@@ -26,8 +26,23 @@ export const SampleQuery = (function (){
       }
     `
   }
+  
+  const banner:Query = {
+    functionName: "banners",
+    query: `
+      query {
+        banners {
+          id,
+          link,
+          src,
+          status,
+          label
+        }
+      }
+    `
+  }
 
   return {
-    test
+    test, banner
   }
 })()

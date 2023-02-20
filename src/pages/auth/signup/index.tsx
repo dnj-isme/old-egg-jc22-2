@@ -9,6 +9,7 @@ import ShowNotification from '@/controller/NotificationController';
 import { ReactNotifications } from 'react-notifications-component';
 import { From } from '@/database/api';
 import { useRouter } from 'next/router';
+import Cookies from 'universal-cookie';
 
 export default function SignUp() {
   const router = useRouter()
@@ -114,8 +115,10 @@ export default function SignUp() {
           ShowNotification("danger", "Error " + res.status, "Look console for details")
       }
       else {
+        const cookie = new Cookies()
+        cookie.set("token", res.data.token)
         global.register = true
-        router.push("/auth/singin")
+        router.push("/auth/verify")
       }
     }
     else {

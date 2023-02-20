@@ -10,6 +10,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import Cookies from 'universal-cookie/cjs/Cookies';
 import { EmailRegex } from '@/controller/FormatController';
 import { useRouter } from 'next/router';
+import { Comp } from '@/components/component';
 
 export default function login() {
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
@@ -19,9 +20,6 @@ export default function login() {
   const router = useRouter()
 
   useEffect(() => {
-    if(global.register) {
-      ShowNotification("success", "Create Account Successfully", "Try Login using it")
-    }
     const sessionTheme = getTheme(sessionStorage.getItem('theme'))
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
@@ -73,6 +71,13 @@ export default function login() {
             </div>
             <div>
               <button className={style.submit} type="submit">SIGN IN</button>
+            </div>
+            <div>
+              <a onClick={(e:any)=>{
+                e.preventDefault()
+                const encode = encodeURIComponent(email)
+                router.push(`forgot/[email]`,`forgot/${encode}`)
+              }}>Forgot Password?</a>
             </div>
             <div>
               <button style={{color: theme.textColor, backgroundColor: theme.button}} onClick={handleOneTime}>GET ONE-TIME SIGN IN CODE</button>

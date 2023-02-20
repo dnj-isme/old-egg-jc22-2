@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/controller/AccountAuthentication.tsx.backup", "src/controller/firebase/config.ts.backup", "src/controller/FileUploader.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/controller/AccountAuthentication.tsx.backup", "src/controller/firebase/config.ts.backup", "src/controller/FileUploader.ts", "src/components/home/carousel/carousel.tsx.backup"],
   "exclude": ["node_modules"]
 }

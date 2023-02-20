@@ -1,7 +1,5 @@
-import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/ThemeContext';
-import ShowNotification from '@/controller/NotificationController';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { ThemeContext } from '@/contexts/ThemeContext';
+import { useContext } from 'react';
 import { Comp } from '../component';
 import style from "./sidebar.module.scss"
 
@@ -10,16 +8,10 @@ import { Icon } from '@iconify/react';
 export default function Sidebar() {
   // TODO: Your hooks starts here...
   const theme = useContext(ThemeContext) // For Theme
-  const router = useRouter() // For Navigating
   
   // TODO: Put UseState Stuff here
-  const [stuff, setStuff] = useState()
 
   // TODO: Put UseEffect Stuff Here
-  useEffect(() => {effect()}, [])
-
-  function effect() {
-  }
 
   // TODO: Put Your Custom Logic here
   function test() {

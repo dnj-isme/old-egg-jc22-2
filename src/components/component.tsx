@@ -1,5 +1,5 @@
 import { ThemeContext } from "@/contexts/ThemeContext"
-import { useContext } from "react"
+import { MouseEvent, useContext } from "react"
 
 export const Comp = (function() {
   function P({children, className, ...args}: {children: any, className?: string}) {
@@ -7,6 +7,13 @@ export const Comp = (function() {
   
     return (
       <p style={{color: theme.textColor}} className={className} {...args}>{children}</p>
+    )
+  }
+  function H1({children, className, ...args}: {children: any, className?: string}) {
+    const theme = useContext(ThemeContext)
+  
+    return (
+      <h1 style={{color: theme.textColor}} className={className} {...args}>{children}</h1>
     )
   }
 
@@ -35,6 +42,36 @@ export const Comp = (function() {
   }
 
   return {
-    P, A, Div, Div2
+    P, A, Div, Div2, H1
+  }
+})()
+
+export const Button = (function() {
+  function Save({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>Save</button>
+  }
+
+  function New({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>New</button>
+  }
+
+  function Send({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>Send</button>
+  }
+  
+  function Edit({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>Edit</button>
+  }
+  
+  function Delete({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>Delete</button>
+  }
+  
+  function Cancel({onClick} : {onClick : (e: MouseEvent) => any}) {
+    return <button onClick={onClick}>Cancel</button>
+  }
+  
+  return {
+    Save, New, Send, Edit, Delete, Cancel
   }
 })()

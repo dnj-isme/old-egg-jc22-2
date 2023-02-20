@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import Sidebar from './sidebar';
 import style from "./banner.module.scss"
-import BannerImage from './banner_image';
-import Carousel from './carousel';
+import Carousel from './carousel/carousel';
 
 export default function Banner() {
   // TODO: Your hooks starts here...
@@ -15,11 +14,6 @@ export default function Banner() {
   // TODO: Put UseState Stuff here
 
   // TODO: Put UseEffect Stuff Here
-  useEffect(() => {effect()}, [])
-
-  function effect() {
-
-  }
 
   // TODO: Put Your Custom Logic here
   function test() {

@@ -6,16 +6,17 @@ import switchStyle from "./switch.module.scss"
 import { useContext, useState, useEffect } from "react";
 import { Theme, ThemeContext } from "@/contexts/ThemeContext";
 import { Auth } from "@/controller/Auth";
-import { Account, isAccount } from "@/contexts/AccountContext";
 import { useRouter } from "next/router";
 import ShowNotification from "@/controller/NotificationController";
+import { Account } from "@/model/account";
 
 export default function Navbar({changeTheme}: {changeTheme: Function}) {
   const theme = useContext(ThemeContext);
   const router = useRouter()
 
   const [checked, setChecked] = useState(theme === Theme.LIGHT)
-  const [account, setAccount] = useState("Sign in / Register")
+  const [name, setName] = useState("Sign in / Register")
+  const [account, setAccount] = useState<Account | null>(null)
 
   function checkboxChanged() {
     const res = !checked
@@ -26,7 +27,8 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
   useEffect(() => {
     Auth.getActiveAccount().then(res => {
       if(res != null) {
-        setAccount(res.first_name)
+        setName(res.first_name)
+        setAccount(res)
         Auth.extendSession();
       }
     })
@@ -44,14 +46,15 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
   }
   
   function navigateOrderList() {
-    // href="/orders/list"
-    if(Auth.getActiveAccount !== null) {
-      Auth.logout()
-      global.logout = true;
-      router.reload();
+    if(account?.admin) {
+      router.push("/admin/dashboard")
+    }
+    else if (account) {
+      // router.push("/orders")
+      ShowNotification("info", "Not Implemented", "Feature is not implemented yet")
     }
     else {
-      router.push("/auth/signin/")
+      router.push("/auth/signin")
     }
   }
   
@@ -64,6 +67,10 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
     }
   }
 
+  function accountPopup(): void {
+    ShowNotification("info", "title","Hello!")
+  }
+
   return (
     <nav className={style.navbar} style={{backgroundColor: theme.navbar, color: theme.textColor, borderColor: theme.border}}>
       <div className={style.left}>
@@ -71,7 +78,9 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
           <Icon icon="charm:menu-hamburger" className={style.hamburger} />
         </div>
         <div>
-          <Image src={Logo} alt="logo" className={style.company}/>
+          <a href="/">
+            <Image src={Logo} alt="logo" className={style.company}/>
+          </a>
         </div>
         <div className={style.address}>
           <div>
@@ -109,17 +118,17 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
           </div>
         </div>
         <a className={style.user} onClick={_ => navigateSignin()} style={{color: theme.textColor}}>
-            <div>
-              <Icon icon="material-symbols:person-outline" className={style.icon}/>
-            </div>
-            <div className={style.text}>
-              <p className={style.greeting}>Welcome</p>
-              <p className={style.action}>{account}</p>
-            </div>
+          <div>
+            <Icon icon="material-symbols:person-outline" className={style.icon}/>
+          </div>
+          <div className={style.text}>
+            <p className={style.greeting}>Welcome</p>
+            <p className={style.action}>{name}</p>
+          </div>
         </a>
         <a className={style.return_order} onClick={_ => navigateOrderList()} style={{color: theme.textColor}}>
-          <p className={style.return}>Returns</p>
-          <p className={style.order}>& Orders</p>
+          <p className={style.return}>{account?.admin ? "Admin" : "Returns"}</p>
+          <p className={style.order}>{account?.admin ? "Page" : "& Orders"}</p>
         </a>
         <a onClick={_ => navigateShoppingCart()} style={{color: theme.textColor}}>
           <Icon icon="ic:outline-shopping-cart" className={style.cart}/>

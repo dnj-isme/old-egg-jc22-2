@@ -113,6 +113,10 @@ body {
   color: red;
 }
 
+.content {
+  height: max-content;
+}
+
 .no-select {
   user-select: none;
   -moz-user-select: none;

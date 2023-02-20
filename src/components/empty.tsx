@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ShowNotification from '@/controller/NotificationController';
 import { useEffect, useState } from 'react';
 
-export default function empty() {
+export default function Empty() {
   // TODO: Your hooks starts here
   const router = useRouter() // For Navigating
 
@@ -16,7 +16,6 @@ export default function empty() {
     const sessionTheme = getTheme(sessionStorage.getItem('theme'))
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
-    ShowNotification('info', 'In Progress', 'This Page is still in progress...')
   }, [])
 
   // TODO: Your React Element Starts here
