@@ -5,5 +5,5 @@ export interface Banner {
   src: string,
   link: string,
   label: string,
-  status: string
+  status: "active" | "disabled" | string
 }

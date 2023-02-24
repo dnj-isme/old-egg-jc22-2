@@ -12,13 +12,15 @@ export default function Carousel() {
   const [position, setPosition] = useState(1);
 
   useEffect(() => {
-    let res: any;
-    effect()
-    .then(output => res = output)
-    return res
+    getData()
   }, [])
 
-  async function effect() {
+  useEffect(() => {
+    const interval = setInterval(next, 3000);
+    return () => clearInterval(interval)
+  }, [position, links])
+
+  async function getData() {
     const res = await From.Graphql.execute(SampleQuery.banner);
     let l:Banner[] = [];
     if(res.success) {
@@ -28,26 +30,39 @@ export default function Carousel() {
       })
       setLinks(l)
     }
-    const intervalId = setInterval(() => {
-      console.log(l.length);
-      next(l.length);
-    }, 3000);
-
-    return () => clearInterval(intervalId);
   }
-  const next = (len: number) => {
-    let length = links.length
-    if(length == 0) {
-      length = len
+  const next = () => {
+    if(links.length == 0) {
+      return
     }
-    setPosition((position + 1) % length);
-  };
+    const len = links.length;
+    let target = position;
+    for(let i = 0; i < len; i++) {
+      const temp = (target + 1 + i + len) % len;
+      console.log(links[temp].status);
+      if(links[temp].status == "active") {
+        target = temp;
+        break;
+      }
+    }
+    console.log(target);
+    setPosition(target);
+  }
 
   const prev = () => {
     if(links.length == 0) {
       return
     }
-    setPosition((position - 1 + links.length) % links.length);
+    const len = links.length;
+    let target = position;
+    for(let i = 0; i < len; i++) {
+      const temp = (target + i + 1 + len) % len;
+      if(links[temp].status == "active") {
+        target = temp;
+        break;
+      }
+    }
+    setPosition(target);
   }; 
 
   return (

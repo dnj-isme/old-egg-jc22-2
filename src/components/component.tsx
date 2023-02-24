@@ -1,5 +1,6 @@
 import { ThemeContext } from "@/contexts/ThemeContext"
 import { MouseEvent, useContext } from "react"
+import btn_style from "./button-component.module.scss"
 
 export const Comp = (function() {
   function P({children, className, ...args}: {children: any, className?: string}) {
@@ -48,27 +49,27 @@ export const Comp = (function() {
 
 export const Button = (function() {
   function Save({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>Save</button>
+    return <button className={btn_style.save} onClick={onClick}>Save</button>
   }
 
   function New({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>New</button>
+    return <button className={btn_style.new} onClick={onClick}>New</button>
   }
 
   function Send({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>Send</button>
+    return <button className={btn_style.send} onClick={onClick}>Send</button>
   }
   
   function Edit({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>Edit</button>
+    return <button className={btn_style.edit} onClick={onClick}>Edit</button>
   }
   
   function Delete({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>Delete</button>
+    return <button className={btn_style.delete} onClick={onClick}>Delete</button>
   }
   
   function Cancel({onClick} : {onClick : (e: MouseEvent) => any}) {
-    return <button onClick={onClick}>Cancel</button>
+    return <button className={btn_style.cancel} onClick={onClick}>Cancel</button>
   }
   
   return {

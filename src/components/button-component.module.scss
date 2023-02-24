@@ -1,0 +1,39 @@
+.edit{
+  background-color: yellow;
+  border: none;
+  padding: 3px  17px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
+.delete{
+  background-color: red;
+  border: none;
+  color: whitesmoke;
+  padding: 3px  17px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
+.cancel {
+  background-color: yellow;
+  border: none;
+  padding: 3px  17px;
+  color: red;
+  font-weight: bolder;
+  border-radius: 5px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
+.save {
+  background-color: limegreen;
+  border: none;
+  padding: 3px  17px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+

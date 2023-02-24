@@ -26,6 +26,10 @@ export default function HomePage() {
       global.logout = false;
       ShowNotification("info", "Logout", "Your account is logged out successfully!");
     }
+    if(global.forceLogout) {
+      global.forceLogout = false;
+      ShowNotification("danger", "Account logged out", "Your account is logged out due to inactivity")
+    }
     const sessionTheme = getTheme(sessionStorage.getItem('theme'))
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)

@@ -6,6 +6,7 @@ import { Banner } from '@/model/banner';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import BannerRow from './banner_row';
+import style from "./banner.module.scss"
 
 export default function BannerList() {
   // TODO: Your hooks starts here...
@@ -33,17 +34,17 @@ export default function BannerList() {
 
   // TODO: Your React Element starts here...
   return (
-    <div className='component' style={{backgroundColor: theme.background}}>
+    <div className={style["component"]} style={{backgroundColor: theme.background}}>
       {/* TODO: Your HTML code starts here */}
-      <table>
+      <table className={style["table-container"]}>
         <thead>
           <tr>
-            <td>No</td>
-            <td>Label</td>
-            <td>Image Source</td>
-            <td>Destination Link</td>
-            <td>Status</td>
-            <td>Action</td>
+            <td className={style["table-1"]} style={{color: theme.textColor}}>No</td>
+            <td className={style["table-2"]} style={{color: theme.textColor}}>Label</td>
+            <td className={style["table-3"]} style={{color: theme.textColor}}>Image Source</td>
+            <td className={style["table-4"]} style={{color: theme.textColor}}>Destination Link</td>
+            <td className={style["table-5"]} style={{color: theme.textColor}}>Status</td>
+            <td className={style["table-6"]} style={{color: theme.textColor}}>Action</td>
           </tr>
         </thead>
         <tbody>

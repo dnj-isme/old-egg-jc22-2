@@ -9,12 +9,14 @@ declare global {
   var logout: boolean
   var unauthorized: boolean
   var register: boolean
+  var forceLogout: boolean
 }
 global.debug = true
 global.signin = false
 global.unauthorized = false
 global.logout = false
 global.register = false
+global.forceLogout = false
 
 export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />

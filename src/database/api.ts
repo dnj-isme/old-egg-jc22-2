@@ -45,7 +45,7 @@ export const From = (function() {
   const Rest = (function() {
     const endpoint = "http://localhost:8080/api"
     4
-    async function fetchData(path: string, method: "GET" | "POST", body?: object, auth?: string): Promise<APIResponse> {
+    async function fetchData(path: string, method: "GET" | "POST" | "PATCH" | "DELETE", body?: object, auth?: string): Promise<APIResponse> {
       if(!path.startsWith("/")) path = `/${path}`
       if(auth == undefined) auth = ""
 

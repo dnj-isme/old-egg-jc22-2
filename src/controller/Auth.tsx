@@ -37,6 +37,12 @@ export const Auth = (function() {
   async function getActiveAccount(): Promise<null | Account> {
     const token = getToken();
     const result = await From.Rest.fetchData("/account/extract", "POST", {token})
+    
+    if(!result.success && result.data.startsWith("token is expired")) {
+      global.forceLogout = true;
+      logout();
+    }
+    
     return result.success ? result.data : null
   }
 

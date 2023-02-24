@@ -1,3 +1,45 @@
 .banner {
   height: 100px;
 }
+
+.component{
+  width: 90vw;
+  margin: 0 auto;
+}
+.table-container{
+  width: 100%;
+  tr{
+    td{
+      padding: 7px 0;
+    }
+  }
+
+  thead{
+    tr{
+      td{
+        border-bottom: 1px solid grey;
+      }
+      .table-1{
+        max-width: 5%;
+      }
+      .table-2{
+        max-width: 20%;
+      }
+      .table-3{
+        max-width: 25%;
+      }
+      .table-4{
+        max-width: 25%;
+      }
+      .table-5{
+        max-width: 10%;
+      }
+      .table-6{
+        max-width: 15%;
+      }
+    }
+  }
+  
+}
+
+
