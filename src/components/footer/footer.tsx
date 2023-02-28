@@ -1,10 +1,24 @@
 import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/ThemeContext';
+import { Auth } from '@/controller/Auth';
+import { Account } from '@/model/account';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState, useContext } from 'react';
+import { Comp } from '../component';
+import { navigateOrderList, navigateSignin } from '../navbar/navbar';
 import style from "./footer.module.scss";
 
 export default function Footer() {
   const theme = useContext(ThemeContext)
+  const router = useRouter()
+
+  const [account, setAccount] = useState<Account | null>(null)
+  useEffect(() => {
+    async function fetchAccount() {
+      setAccount(await Auth.getActiveAccount());
+    }
+    fetchAccount();
+  }, [])
 
   // TODO: Your custom logic starts here...
   
@@ -12,77 +26,77 @@ export default function Footer() {
     <ThemeContext.Provider value={theme}>
       <div className={style.main} style={{backgroundColor: theme.background}}>
         {/* TODO: Your HTML code starts here */}
-        <footer style={{backgroundColor: theme.background2}}>
+        <footer style={{backgroundColor: theme.footer}}>
           <div className={style.column}>
-            <h3 style={{color: theme.textColor}}>CUSTOMER SERVICE</h3>
+            <h3>CUSTOMER SERVICE</h3>
             <div>
-              <a style={{color: theme.textColor}} href="#">Help Center</a>
-              <a style={{color: theme.textColor}} href="#">Track an Order</a>
-              <a style={{color: theme.textColor}} href="#">Return an Item</a>
-              <a style={{color: theme.textColor}} href="#">Return Policy</a>
-              <a style={{color: theme.textColor}} href="#">Privacy & Security</a>
-              <a style={{color: theme.textColor}} href="#">Feedback</a>
+              <a href="https://kb.newegg.com/">Help Center</a>
+              <a href="#">Track an Order</a>
+              <a href="#">Return an Item</a>
+              <a href="https://www.newegg.com/promotions/nepro/22-0073/index.html?cm_sp=cs_menu-_-return_policy">Return Policy</a>
+              <a href="https://kb.newegg.com/Article/Index/12/3?id=1166">Privacy & Security</a>
+              <a href="#">Feedback</a>
             </div>
           </div>
           <div className={style.column}>
-            <h3 style={{color: theme.textColor}}>MY ACCOUNT</h3>
+            <h3>MY ACCOUNT</h3>
             <div>
-              <a style={{color: theme.textColor}} href="#">Login/Register</a>
-              <a style={{color: theme.textColor}} href="#">Order History</a>
-              <a style={{color: theme.textColor}} href="#">Returns History</a>
-              <a style={{color: theme.textColor}} href="#">Address Book</a>
-              <a style={{color: theme.textColor}} href="#">Wish Lists</a>
-              <a style={{color: theme.textColor}} href="#">My Build Lists</a>
-              <a style={{color: theme.textColor}} href="#">My Build Showcase</a>
-              <a style={{color: theme.textColor}} href="#">Email Notifications</a>
-              <a style={{color: theme.textColor}} href="#">Subscriptions Orders</a>
-              <a style={{color: theme.textColor}} href="#">Auto Notifications</a>
+              <a onClick={_ => navigateSignin(router)}>Login/Register</a>
+              <a onClick={_ => navigateOrderList(account, router)}>Order History</a>
+              <a onClick={_ => navigateOrderList(account, router)}>Returns History</a>
+              <a href="https://secure.newegg.com/account/addressbook">Address Book</a>
+              <a href="#">Wish Lists</a>
+              <a href="#">My Build Lists</a>
+              <a href="#">My Build Showcase</a>
+              <a href="#">Email Notifications</a>
+              <a href="#">Subscriptions Orders</a>
+              <a href="#">Auto Notifications</a>
             </div>
           </div>        
           <div className={style.column}>
-            <h3 style={{color: theme.textColor}}>COMPANY INFORMATION</h3>
+            <h3>COMPANY INFORMATION</h3>
             <div>
-              <a style={{color: theme.textColor}} href="#">About Newegg</a>
-              <a style={{color: theme.textColor}} href="#">Investor Relations</a>
-              <a style={{color: theme.textColor}} href="#">Awards/Rankings</a>
-              <a style={{color: theme.textColor}} href="#">Hours and Locations</a>
-              <a style={{color: theme.textColor}} href="#">Press Inquiries</a>
-              <a style={{color: theme.textColor}} href="#">Newegg Careers</a>
-              <a style={{color: theme.textColor}} href="#">Newsroom</a>
-              <a style={{color: theme.textColor}} href="#">Newegg Insider</a>
-              <a style={{color: theme.textColor}} href="#">Calif. Transparency <br /> in Supply Chains Act</a>
-              <a style={{color: theme.textColor}} href="#">Cigna MRF</a>
+              <a href="https://www.newegg.com/corporate/about">About Newegg</a>
+              <a href="#">Investor Relations</a>
+              <a href="#">Awards/Rankings</a>
+              <a href="#">Hours and Locations</a>
+              <a href="#">Press Inquiries</a>
+              <a href="#">Newegg Careers</a>
+              <a href="https://www.newegg.com/corporate/newsroom">Newsroom</a>
+              <a href="#">Newegg Insider</a>
+              <a href="#">Calif. Transparency <br /> in Supply Chains Act</a>
+              <a href="#">Cigna MRF</a>
             </div>
           </div>
           <div className={style.column}>
-            <h3 style={{color: theme.textColor}}>TOOLS & RESOURCES</h3>
+            <h3>TOOLS & RESOURCES</h3>
             <div>
-              <a style={{color: theme.textColor}} href="#">Sell on Newegg</a>
-              <a style={{color: theme.textColor}} href="#">For Your Business</a>
-              <a style={{color: theme.textColor}} href="#">Newegg Partner Services</a>
-              <a style={{color: theme.textColor}} href="#">Become an Affiliate</a>
-              <a style={{color: theme.textColor}} href="#">Newegg Creators</a>
-              <a style={{color: theme.textColor}} href="#">Site Map</a>
-              <a style={{color: theme.textColor}} href="#">Shop by Brand</a>
-              <a style={{color: theme.textColor}} href="#">Rebates</a>
-              <a style={{color: theme.textColor}} href="#">Mobile Apps</a>
+              <a href="#">Sell on Newegg</a>
+              <a href="#">For Your Business</a>
+              <a href="#">Newegg Partner Services</a>
+              <a href="#">Become an Affiliate</a>
+              <a href="#">Newegg Creators</a>
+              <a href="#">Site Map</a>
+              <a href="#">Shop by Brand</a>
+              <a href="#">Rebates</a>
+              <a href="https://www.newegg.com/mobile">Mobile Apps</a>
             </div>
           </div>
           <div className={style.column}>
-            <h3 style={{color: theme.textColor}}>SHOP OUR BRANDS</h3>
+            <h3>SHOP OUR BRANDS</h3>
             <div>
-              <a style={{color: theme.textColor}} href="#">Newegg Business</a>
-              <a style={{color: theme.textColor}} href="#">Newegg Global</a>
-              <a style={{color: theme.textColor}} href="#">ABS</a>
-              <a style={{color: theme.textColor}} href="#">Rosewill</a>
+              <a href="#">Newegg Business</a>
+              <a href="#">Newegg Global</a>
+              <a href="#">ABS</a>
+              <a href="#">Rosewill</a>
             </div>
           </div>
         </footer>
         <div className={style.closing}>
-          <p style={{color: theme.textColor}}>© 2000-2023 Newegg Inc.  All rights reserved.</p>
-          <a style={{color: theme.textColor}} href="#">Terms & Conditions</a>
-          <a style={{color: theme.textColor}} href="#">Privacy Policy</a>
-          <a style={{color: theme.textColor}} href="#">Cookie Preferences</a>
+          <Comp.P>© 2000-2023 Newegg Inc.  All rights reserved.</Comp.P>
+          <Comp.A href="#">Terms & Conditions</Comp.A>
+          <Comp.A href="#">Privacy Policy</Comp.A>
+          <Comp.A href="#">Cookie Preferences</Comp.A>
         </div>
       </div>
     </ThemeContext.Provider>

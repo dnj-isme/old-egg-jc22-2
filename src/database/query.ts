@@ -42,7 +42,41 @@ export const SampleQuery = (function (){
     `
   }
 
+  const stores: Query = {
+    functionName: "storeAccounts",
+    query: `
+      query($pagination: PaginationInput) {
+        storeAccounts(pagination: $pagination) {
+          id,
+          first_name,
+          last_name,
+          email,
+          phone,
+          subscribe,
+          status
+        }
+      }
+    `
+  }
+
+  const customers: Query = {
+    functionName: "customerAccounts",
+    query: `
+      query($pagination: PaginationInput) {
+        customerAccounts(pagination: $pagination) {
+          id,
+          first_name,
+          last_name,
+          email,
+          phone,
+          subscribe,
+          status
+        }
+      }
+    `
+  }
+
   return {
-    test, banner
+    test, banner, stores, customers
   }
 })()

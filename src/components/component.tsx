@@ -47,32 +47,53 @@ export const Comp = (function() {
   }
 })()
 
-export const Button = (function() {
-  function Save({onClick} : {onClick : (e: MouseEvent) => any}) {
+export interface ButtonParams {
+  onClick? : (e: MouseEvent) => any,
+  children: null | JSX.Element | JSX.Element[] | string
+}
+
+export const Button = {
+  Save: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.save} onClick={onClick}>Save</button>
-  }
-
-  function New({onClick} : {onClick : (e: MouseEvent) => any}) {
+  },
+  
+  New: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.new} onClick={onClick}>New</button>
-  }
+  },
 
-  function Send({onClick} : {onClick : (e: MouseEvent) => any}) {
+  Send: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.send} onClick={onClick}>Send</button>
-  }
-  
-  function Edit({onClick} : {onClick : (e: MouseEvent) => any}) {
+  },
+
+  Edit: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.edit} onClick={onClick}>Edit</button>
-  }
-  
-  function Delete({onClick} : {onClick : (e: MouseEvent) => any}) {
+  },
+
+  Delete: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.delete} onClick={onClick}>Delete</button>
-  }
-  
-  function Cancel({onClick} : {onClick : (e: MouseEvent) => any}) {
+  },
+
+  Cancel: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
     return <button className={btn_style.cancel} onClick={onClick}>Cancel</button>
-  }
+  },
   
-  return {
-    Save, New, Send, Edit, Delete, Cancel
+  Submit: (params: ButtonParams) => {
+    return <button className={btn_style.blue} type="submit" onClick={params.onClick}>{params.children}</button>
+  },
+  
+  Green: (params: ButtonParams) => {
+    return <button className={btn_style.green} onClick={params.onClick}>{params.children}</button>
+  },
+  
+  Yellow: (params: ButtonParams) => {
+    return <button className={btn_style.yellow} onClick={params.onClick}>{params.children}</button>
+  },
+  
+  Red: (params: ButtonParams) => {
+    return <button className={btn_style.red} onClick={params.onClick}>{params.children}</button>
+  },
+  
+  Blue: (params: ButtonParams) => {
+    return <button className={btn_style.blue} onClick={params.onClick}>{params.children}</button>
   }
-})()
+}

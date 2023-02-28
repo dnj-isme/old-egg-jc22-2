@@ -15,6 +15,7 @@ import { SampleQuery } from '@/database/query';
 import { Account } from '@/model/account';
 import { GetServerSidePropsContext } from 'next';
 import { PaginationLink } from '@/components/pagination/pagination';
+import CustomerList from '@/components/admin/Customers/customer_table';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const {query} = context
@@ -31,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     contentsPerPage = parseInt(query.contentsPerPage[0])
   }
 
-  const res2 = await From.Rest.fetchData("/account/business/count", "GET")
+  const res2 = await From.Rest.fetchData("/account/customers/count", "GET")
 
   let totalPages = 1;
   if(res2.success) {
@@ -46,7 +47,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/shop?page=1"
+        destination: "/admin/customers?page=1"
       },
       props: {
         contentsPerPage
@@ -58,7 +59,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/shop?page=" + totalPages
+        destination: "/admin/customers?page=" + totalPages
       },
       props: {
         contentsPerPage
@@ -66,7 +67,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
   }
 
-  const res = await From.Graphql.execute(SampleQuery.stores, {
+  const res = await From.Graphql.execute(SampleQuery.customers, {
     pagination: {
       page,
       contentsPerPage
@@ -99,7 +100,7 @@ interface Params {
   totalPages: number
 }
 
-export default function Shop(props: Params) {
+export default function Customers(props: Params) {
   // TODO: Your hooks starts here
   const router = useRouter() // For Navigating
 
@@ -110,14 +111,6 @@ export default function Shop(props: Params) {
 
   // TODO: Your useEffect starts here
   useEffect(() => {
-    if(global.ban) {
-      ShowNotification("success", "Success", "Shop Banned Successfully!")
-      global.ban = false;
-    }
-    if(global.unban) {
-      ShowNotification("success", "Success", "Shop Unbanned Successfully!")
-      global.unban = false;
-    }
     const sessionTheme = getTheme(sessionStorage.getItem('theme'))
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
@@ -147,12 +140,9 @@ export default function Shop(props: Params) {
           </div>
           <div className={style.content} style={{backgroundColor: theme.background}}>
             <div>
-              <Comp.H1>Shop Account</Comp.H1>
+              <Comp.H1>Customer Accounts</Comp.H1>
             </div>
-            <div>
-              <Button.Blue onClick={_ => router.push("shop/new")}>Add Shop</Button.Blue>
-            </div>
-            <StoreList stores={props.accounts} />
+            <CustomerList customers={props.accounts} />
             <PaginationLink page={props.page} totalPages={props.totalPages} route="/admin/shop/"/>
           </div>
           <Footer />

@@ -8,6 +8,7 @@ export interface Account {
   subscribe: boolean
   verified: boolean
   business: boolean
+  status: "active" | "disabled"
 }
 
 export function isAccount(object: any): object is Account {

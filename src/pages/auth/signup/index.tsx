@@ -10,6 +10,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import { From } from '@/database/api';
 import { useRouter } from 'next/router';
 import Cookies from 'universal-cookie';
+import { emailRegex, passwordRegex, phoneRegex } from '@/controller/Regex';
 
 export default function SignUp() {
   const router = useRouter()
@@ -32,18 +33,6 @@ export default function SignUp() {
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
-
-  const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
-  const passwordRegex = {
-    capital: /[A-Z]/,
-    regular: /[a-z]/,
-    number: /[0-9]/,
-    symbol: /[\`\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\\\|\;\:\'\"\,\<\.\>\/\?]/,
-    length: /^.{8,30}$/,
-    all: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\`\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\\\|\;\:\'\"\,\<\.\>\/\?]).{8,30}$/
-  }
-
-  const phoneRegex = /^(0|\+)[1-9]\d{8,}$/
 
   function validation(input: string, regex: RegExp) {
     return regex.test(input) ? "✅" : "❌" 

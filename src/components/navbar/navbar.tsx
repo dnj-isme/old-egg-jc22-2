@@ -6,9 +6,47 @@ import switchStyle from "./switch.module.scss"
 import { useContext, useState, useEffect } from "react";
 import { Theme, ThemeContext } from "@/contexts/ThemeContext";
 import { Auth } from "@/controller/Auth";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import ShowNotification from "@/controller/NotificationController";
 import { Account } from "@/model/account";
+
+export async function navigateSignin(router: NextRouter) {
+  const res = await Auth.getActiveAccount()
+  if(res === null) {
+    router.push("/auth/signin")
+  }
+  else {
+    global.logout = true
+    Auth.logout();
+    if(router.route == "/") router.reload()
+    else router.push("/")
+  }
+}
+
+export function navigateShoppingCart(router: NextRouter) {
+  if(Auth.getActiveAccount !== null) {
+    ShowNotification("info", "In Progress", "View Shopping Cart is in Progress")
+  }
+  else {
+    router.push("/auth/signin/")
+  }
+}
+
+export function navigateOrderList(account: Account | null, router: NextRouter) {
+  if(account?.admin) {
+    router.push("/admin/dashboard")
+  }
+  else if(account?.business) {
+    router.push("/shop")
+  }
+  else if (account) {
+    // router.push("/orders")
+    ShowNotification("info", "Not Implemented", "Feature is not implemented yet")
+  }
+  else {
+    router.push("/auth/signin")
+  }
+}
 
 export default function Navbar({changeTheme}: {changeTheme: Function}) {
   const theme = useContext(ThemeContext);
@@ -33,39 +71,6 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
       }
     })
   }, [])
-
-  async function navigateSignin() {
-    const res = await Auth.getActiveAccount()
-    if(res === null) {
-      router.push("/auth/signin")
-    }
-    else {
-      Auth.logout();
-      router.reload()
-    }
-  }
-  
-  function navigateOrderList() {
-    if(account?.admin) {
-      router.push("/admin/dashboard")
-    }
-    else if (account) {
-      // router.push("/orders")
-      ShowNotification("info", "Not Implemented", "Feature is not implemented yet")
-    }
-    else {
-      router.push("/auth/signin")
-    }
-  }
-  
-  function navigateShoppingCart() {
-    if(Auth.getActiveAccount !== null) {
-      ShowNotification("info", "In Progress", "View Shopping Cart is in Progress")
-    }
-    else {
-      router.push("/auth/signin/")
-    }
-  }
 
   function accountPopup(): void {
     ShowNotification("info", "title","Hello!")
@@ -117,7 +122,7 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
             </label>
           </div>
         </div>
-        <a className={style.user} onClick={_ => navigateSignin()} style={{color: theme.textColor}}>
+        <a className={style.user} onClick={_ => navigateSignin(router)} style={{color: theme.textColor}}>
           <div>
             <Icon icon="material-symbols:person-outline" className={style.icon}/>
           </div>
@@ -126,11 +131,11 @@ export default function Navbar({changeTheme}: {changeTheme: Function}) {
             <p className={style.action}>{name}</p>
           </div>
         </a>
-        <a className={style.return_order} onClick={_ => navigateOrderList()} style={{color: theme.textColor}}>
-          <p className={style.return}>{account?.admin ? "Admin" : "Returns"}</p>
-          <p className={style.order}>{account?.admin ? "Page" : "& Orders"}</p>
+        <a className={style.return_order} onClick={_ => navigateOrderList(account, router)} style={{color: theme.textColor}}>
+          <p className={style.return}>{account?.admin ? "Admin" : account?.business ? "Shop" : "Returns"}</p>
+          <p className={style.order}>{account?.admin || account?.business ? "Page" : "& Orders"}</p>
         </a>
-        <a onClick={_ => navigateShoppingCart()} style={{color: theme.textColor}}>
+        <a onClick={_ => navigateShoppingCart(router)} style={{color: theme.textColor}}>
           <Icon icon="ic:outline-shopping-cart" className={style.cart}/>
         </a>
       </div>

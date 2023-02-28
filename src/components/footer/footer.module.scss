@@ -6,6 +6,7 @@
     display: block;
     text-decoration: none;
     margin: 0.5rem 0;
+    cursor: pointer;
   }
 
   a:hover {
@@ -17,6 +18,11 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 1rem 3rem;
+
+    a, h3 {
+      color: white;
+    }
+
     .column {
   
       h3 {
@@ -40,4 +46,27 @@
       margin: 2rem 1rem;
     }
   }
+}
+
+@media only screen and (max-width: 500px) {
+  .main {
+    footer {
+      display: none;
+    }
+  }
+  // .main {
+  //   footer {
+  //     padding: 0.2rem 1rem;
+  //   }
+  //   h3 {
+  //     font-size: 0.4rem;
+  //   }
+  //   p, a {
+  //     font-size: 0.5rem;
+  //   }
+  // }
+  //
+  // .closing a, .closing p {
+  //   margin: 0.8rem 0.5rem;
+  // }
 }

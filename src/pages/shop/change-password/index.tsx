@@ -6,10 +6,8 @@ import { useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
-import Sidebar from '@/components/admin/topbar/topbar';
-import { Button, Comp } from '@/components/component';
-import BannerList from '@/components/admin/promotion/banner_table';
-import style from "./style.module.scss"
+import { Comp } from '@/components/component';
+import Topbar from '@/components/shop/topbar/topbar';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -20,13 +18,10 @@ export default function index() {
 
   // TODO: Your useEffect starts here
   useEffect(() => {
-    if(global.bannerInsert) {
-      global.bannerInsert = false;
-      ShowNotification("success", "Success!", "Banner created successfully!")
-    }
     const sessionTheme = getTheme(sessionStorage.getItem('theme'))
     sessionStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
+    ShowNotification('info', 'In Progress', 'This Page is still in progress...')
   }, [])
 
   // TODO: Your custom logic starts here...
@@ -46,22 +41,17 @@ export default function index() {
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
       MustLogin
+      MustBusiness
     >
       <ThemeContext.Provider value={theme}>
-        <ReactNotifications />
-        <div className='main' style={{backgroundColor: theme.background}}>
+        <div className='main'>
+          <ReactNotifications />
           <div>
             <Navbar changeTheme={changeTheme}/>
-            <Sidebar />
+            <Topbar />
           </div>
-          <div className={style.content} style={{backgroundColor: theme.background}}>
-            <div>
-              <Comp.H1>Promotion Banner</Comp.H1>
-            </div>
-            <div>
-              <Button.Blue onClick={_ => router.push("promotion/new")}>Add Banner</Button.Blue>
-            </div>
-            <BannerList />
+          <div className='content' style={{backgroundColor: theme.background}}>
+            {test()}
           </div>
           <Footer />
         </div>

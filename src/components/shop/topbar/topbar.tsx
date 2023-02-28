@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { Comp } from '@/components/component';
 
-import style from './sidebar.module.scss'
+import style from './topbar.module.scss'
 
 export default function Topbar() {
   // TODO: Your hooks starts here...
@@ -15,15 +15,17 @@ export default function Topbar() {
   // TODO: Put UseState Stuff here
 
   // TODO: Put Your Custom Logic here
+  function navigate(url: string) {
+    router.push("/shop/" + url)
+  }
 
   // TODO: Your React Element starts here...
   return (
     <div className={style.component} style={{backgroundColor: theme.navbar}}>
-      <Comp.A href="dashboard" className={style.link}>Dashboard</Comp.A>
-      <Comp.A href="shop" className={style.link}>Shop</Comp.A>
-      <Comp.A href="user" className={style.link}>User</Comp.A>
-      <Comp.A href="chat" className={style.link}>Chat</Comp.A>
-      <Comp.A href="promotion" className={style.link}>Promotion</Comp.A>
+      <a style={{color: theme.textColor}} onClick={_=>navigate("")} className={style.link}>Dashboard</a>
+      <a style={{color: theme.textColor}} onClick={_=>navigate("product")} className={style.link}>Product</a>
+      <a style={{color: theme.textColor}} onClick={_=>navigate("chat")} className={style.link}>Live Chat</a>
+      <a style={{color: theme.textColor}} onClick={_=>navigate("change-password")} className={style.link}>Change Password</a>
     </div>
   )
 }

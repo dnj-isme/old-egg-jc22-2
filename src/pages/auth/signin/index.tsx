@@ -8,7 +8,7 @@ import { Auth } from '@/controller/Auth';
 import ShowNotification from '@/controller/NotificationController';
 import { ReactNotifications } from 'react-notifications-component';
 import Cookies from 'universal-cookie/cjs/Cookies';
-import { EmailRegex } from '@/controller/FormatController';
+import { emailRegex } from '@/controller/Regex';
 import { useRouter } from 'next/router';
 import { Comp } from '@/components/component';
 
@@ -28,6 +28,9 @@ export default function login() {
   async function handleLogin(e: FormEvent) {
     e.preventDefault()
     
+    if(!email || !password) {
+      ShowNotification("danger", "Error", "You have empty fields")
+    }
     const res = await Auth.attemptLogin(email, password)
     if(res.success) {
       ShowNotification("success", "Success", "Login Successfull!");
@@ -35,14 +38,14 @@ export default function login() {
       router.push("/")
     }
     else {
-      ShowNotification("danger", "Failed", "Invalid username or password");
+      ShowNotification("danger", "Failed", res.data);
     }
   } 
 
   function handleOneTime(e: FormEvent) {
     e.preventDefault()
 
-    if(EmailRegex.test(email)) {
+    if(emailRegex.test(email)) {
       // TODO: Handle One Time Login
       ShowNotification("info", "In Progress", "Handling One Time Login is in progress...");
     }

@@ -1,5 +1,4 @@
-.edit{
-  background-color: yellow;
+@mixin button-default {
   border: none;
   padding: 3px  17px;
   border-radius: 5px;
@@ -7,33 +6,28 @@
   cursor: pointer;
 }
 
-.delete{
+.edit, .yellow{
+  background-color: yellow;
+  @include button-default()
+}
+
+.delete, .red{
   background-color: red;
-  border: none;
-  color: whitesmoke;
-  padding: 3px  17px;
-  border-radius: 5px;
-  border: 1px solid grey;
-  cursor: pointer;
+  @include button-default()
+}
+
+.submit, .blue{
+  background-color: #0096ff;
+  @include button-default()
 }
 
 .cancel {
   background-color: yellow;
-  border: none;
-  padding: 3px  17px;
   color: red;
-  font-weight: bolder;
-  border-radius: 5px;
-  border: 1px solid grey;
-  cursor: pointer;
+  @include button-default()
 }
 
-.save {
+.save, .green {
   background-color: limegreen;
-  border: none;
-  padding: 3px  17px;
-  border-radius: 5px;
-  border: 1px solid grey;
-  cursor: pointer;
+  @include button-default()
 }
-

@@ -1,14 +1,15 @@
 import { createContext } from "react"
 
 export type ThemeType = {
-  background2: string
   button: string,
   className: "light" | "dark",
   navbar: string,
   background: string,
+  background2: string,
   textColor: string,
   cardBG: string,
-  border: string
+  border: string,
+  footer: string,
 }
 
 export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
@@ -21,6 +22,7 @@ export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
     cardBG: "#ECF1FE",
     border: "transparent",
     button: "#FFF",
+    footer: "#0A185C",
   },
   DARK: {
     className: "dark",
@@ -31,6 +33,7 @@ export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
     cardBG: "#262626",
     border: "whitesmoke",
     button: "#363636",
+    footer: "#121212",
   },
 }
 

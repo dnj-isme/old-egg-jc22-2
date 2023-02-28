@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import {useEffect, useState} from 'react';
 import { Account } from "@/model/account";
+import ShowNotification from "./NotificationController";
 
 export interface ProtectionParameter {
   MustLogin?: boolean,
@@ -36,6 +37,7 @@ export const Auth = (function() {
   
   async function getActiveAccount(): Promise<null | Account> {
     const token = getToken();
+    if(token == null) return null
     const result = await From.Rest.fetchData("/account/extract", "POST", {token})
     
     if(!result.success && result.data.startsWith("token is expired")) {
@@ -68,21 +70,17 @@ export const Auth = (function() {
         router.push("/");
         return null      
       }
-  
+      
       if(props.MustLogin && account == null) {
-        router.push("/login")
+        router.push("/auth/signin")
         return null
       }
-      else if(props.MustLogin && !account?.verified) {
-        router.push("/login")
-        return null
-      }
-      else if(props.MustBusiness && !account?.admin) {
+      if(props.MustBusiness && !account?.business) {
         global.unauthorized = true;
         router.push("/")
         return null;
       }
-      else if(props.MustAdmin && !account?.admin) {
+      if(props.MustAdmin && !account?.admin) {
         global.unauthorized = true;
         router.push("/")
         return null;

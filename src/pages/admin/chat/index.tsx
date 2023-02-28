@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
-import Sidebar from '@/components/admin/sidebar/sidebar';
+import Sidebar from '@/components/admin/topbar/topbar';
 import { Comp } from '@/components/component';
 
 export default function index() {
@@ -25,9 +25,6 @@ export default function index() {
   }, [])
 
   // TODO: Your custom logic starts here...
-  function test() {
-    return 'Hello World!'
-  }
 
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK

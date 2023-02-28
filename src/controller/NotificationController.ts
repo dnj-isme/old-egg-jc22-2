@@ -16,3 +16,15 @@ export default function ShowNotification(type: NOTIFICATION_TYPE, title: string,
     }
   });
 }
+
+export const NotificationTemplate = {
+  Error: function() {
+    ShowNotification("danger", "Error occured", "View console for details")
+  },
+  Success: function() {
+    ShowNotification("success", "Success", "The Process is succeed!")
+  },
+  InProgress: function(progress?: string) {
+    ShowNotification("info", "In Progress", `Process "${progress}" is under construction!`)
+  }
+}

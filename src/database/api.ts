@@ -7,7 +7,7 @@ import axios, { Axios } from "axios"
 //   body?: BodyInit
 // }
 
-interface APIResponse {
+export interface APIResponse {
   raw: any,
   status: number,
   data: any, 
@@ -44,21 +44,11 @@ export const From = (function() {
 
   const Rest = (function() {
     const endpoint = "http://localhost:8080/api"
-    4
     async function fetchData(path: string, method: "GET" | "POST" | "PATCH" | "DELETE", body?: object, auth?: string): Promise<APIResponse> {
       if(!path.startsWith("/")) path = `/${path}`
       if(auth == undefined) auth = ""
 
-      const url = endpoint + path;
-      
-      // const httpRequest : Request = {
-      //   method,
-      //   headers: {
-      //     Authorization: auth
-      //   }
-      // }
-
-
+      const url = endpoint + path;    
 
       if(method == "POST") {
         if(body == undefined) body = {}

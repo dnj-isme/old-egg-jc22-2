@@ -7,7 +7,8 @@ import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import { Comp } from '@/components/component';
-import Topbar from '@/components/admin/sidebar/sidebar';
+import Topbar from '@/components/admin/topbar/topbar';
+
 
 export default function index() {
   // TODO: Your hooks starts here

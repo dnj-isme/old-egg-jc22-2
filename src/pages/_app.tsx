@@ -10,6 +10,9 @@ declare global {
   var unauthorized: boolean
   var register: boolean
   var forceLogout: boolean
+  var bannerInsert: boolean
+  var ban: boolean
+  var unban: boolean
 }
 global.debug = true
 global.signin = false
@@ -17,6 +20,8 @@ global.unauthorized = false
 global.logout = false
 global.register = false
 global.forceLogout = false
+global.ban = false
+global.unban = false
 
 export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
