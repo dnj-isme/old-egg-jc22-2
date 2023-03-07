@@ -1,0 +1,39 @@
+.base {
+  display: flex;
+  flex-direction: row;
+
+  .sidebar {
+    width: 20%;
+  }
+
+  .component {
+    width: 80%;
+  }
+
+  ul {
+    margin-top: 1.2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.item a {
+  display: flex;
+  flex-direction: row;
+  padding: 0.4rem;
+  text-decoration: none;
+
+  font-size: 1rem;
+
+  * {
+    margin-left: 1rem;
+  }
+
+  &:hover {
+    filter: brightness(75%);
+    cursor: pointer;
+  }
+}
+
+.sticky {
+  position: sticky;
+}

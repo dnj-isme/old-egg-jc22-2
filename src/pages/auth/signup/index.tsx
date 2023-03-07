@@ -29,8 +29,8 @@ export default function SignUp() {
   const emailErr = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
-    const sessionTheme = getTheme(sessionStorage.getItem('theme'))
-    sessionStorage.setItem('theme', sessionTheme.className)
+    const sessionTheme = getTheme(localStorage.getItem('theme'))
+    localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
 
@@ -107,7 +107,7 @@ export default function SignUp() {
         const cookie = new Cookies()
         cookie.set("token", res.data.token)
         global.register = true
-        router.push("/auth/verify")
+        router.push("/auth/signin")
       }
     }
     else {

@@ -1,3 +1,4 @@
+import ShowNotification from "@/controller/NotificationController"
 import { Query } from "@/database/query"
 import axios, { Axios } from "axios"
 
@@ -28,19 +29,41 @@ export const From = (function() {
           variables
         }
       })
-      
+
       return {
         raw: result,
         status: result.status,
         data: result.data?.data[query.functionName],
-        success: true
+        success: result.data != null
       }
     }
 
     return {
       endpoint, execute
-    }
+    } 
   })()
+
+  const GeoLocation = {
+    getLocation: async function(longitude: number, latitude: number): Promise<APIResponse> {
+      const endpoint = `http://api.geonames.org/countryCodeJSON?lat=${latitude}&lng=${longitude}&username=dnj_isme`;
+      try {
+        const response = await axios.get(endpoint)
+        return {
+          data: response.data,
+          status: response.status,
+          raw: response,
+          success: true
+        }
+      } catch(e: any) {
+        return {
+          raw: e,
+          status: e.response.status,
+          data: e.response.data.error,
+          success: false
+        }
+      }
+    }
+  }
 
   const Rest = (function() {
     const endpoint = "http://localhost:8080/api"
@@ -95,6 +118,6 @@ export const From = (function() {
   })()
 
   return {
-    Graphql, Rest
+    Graphql, Rest, GeoLocation
   }
 })()

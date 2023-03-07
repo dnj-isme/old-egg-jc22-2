@@ -13,8 +13,10 @@ declare global {
   var bannerInsert: boolean
   var ban: boolean
   var unban: boolean
+  var checkout: boolean
 }
 global.debug = true
+global.checkout = false
 global.signin = false
 global.unauthorized = false
 global.logout = false

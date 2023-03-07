@@ -13,8 +13,8 @@ export default function Empty() {
 
   // TODO: Your useEffect starts here
   useEffect(() => {
-    const sessionTheme = getTheme(sessionStorage.getItem('theme'))
-    sessionStorage.setItem('theme', sessionTheme.className)
+    const sessionTheme = getTheme(localStorage.getItem('theme'))
+    localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
 

@@ -16,7 +16,7 @@ export default function Topbar() {
 
   // TODO: Put Your Custom Logic here
   function navigate(url: string) {
-    router.push("/shop/" + url)
+    router.push("/shop/manage/" + url)
   }
 
   // TODO: Your React Element starts here...

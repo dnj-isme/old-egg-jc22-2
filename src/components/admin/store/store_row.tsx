@@ -7,7 +7,7 @@ import { Account } from '@/model/account';
 import { Banner } from '@/model/banner';
 import { useRouter } from 'next/router';
 import { MouseEvent, useContext, useEffect, useState } from 'react';
-import style from "./banner.module.scss"
+import style from "./store.module.scss"
 
 export interface StoreRowParams {
   idx: number,
@@ -26,7 +26,7 @@ export default function StoreRow(props: StoreRowParams) {
   async function handleBan(e: MouseEvent) {
     e.preventDefault()
     // NotificationTemplate.InProgress("Ban store account")
-    const res = await From.Rest.fetchData("/account/business/status","PATCH", {
+    const res = await From.Rest.fetchData("/account/status","PATCH", {
       id: props.data.id,
       status: "disabled"
     }, Auth.getToken())
@@ -44,7 +44,7 @@ export default function StoreRow(props: StoreRowParams) {
   async function handleUnban(e: MouseEvent) {
     e.preventDefault()
     // NotificationTemplate.InProgress("Unban store account")
-    const res = await From.Rest.fetchData("/account/business/status","PATCH", {
+    const res = await From.Rest.fetchData("/account/status","PATCH", {
       id: props.data.id,
       status: "active"
     }, Auth.getToken())
@@ -62,12 +62,12 @@ export default function StoreRow(props: StoreRowParams) {
   // TODO: Your React Element starts here...
   return (
     <tr>
-      <td><Comp.P>{props.idx + 1}</Comp.P></td>
-      <td><Comp.P>{props.data.first_name}</Comp.P></td>
-      <td><Comp.P>{props.data.email}</Comp.P></td>
-      <td><Comp.P>{props.data.phone}</Comp.P></td>
-      <td><Comp.P>{props.data.status}</Comp.P></td>
-      <td>
+      <td className={style["table-1"]}><Comp.P>{props.idx + 1}</Comp.P></td>
+      <td className={style["table-2"]}><Comp.P>{props.data.first_name}</Comp.P></td>
+      <td className={style["table-3"]}><Comp.P>{props.data.email}</Comp.P></td>
+      <td className={style["table-4"]}><Comp.P>{props.data.phone}</Comp.P></td>
+      <td className={style["table-5"]}><Comp.P>{props.data.status}</Comp.P></td>
+      <td className={style["table-6"]}>
         {
           props.data.status == "active" ?
           <BanAction data={props.data} handle={handleBan} /> :

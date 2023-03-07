@@ -181,14 +181,18 @@ $anim: all 0.2s;
 
     .cart {
       font-size: $height;
-      border-radius: 100%;
-      padding: 0.4rem;
+      padding: 0.4rem 0.8rem;
       cursor: pointer;
-    }
+      font-size: 2rem;
+      p {
+        font-size: 1rem;
+      }
+      border-radius: 10rem;
 
-    .cart:hover {
-      transition: $anim;
-      background-color: $hover-color;
+      &:hover {
+        transition: $anim;
+        background-color: $hover-color;
+      }
     }
   }
 }
@@ -196,6 +200,17 @@ $anim: all 0.2s;
 @media only screen and (max-width: 1200px) {
   .navbar .address .text {
     display: none !important;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  overflow-x: auto;
+  li {
+    padding: 0.5rem 0.7rem;
+    white-space: nowrap;
   }
 }
 

@@ -16,8 +16,6 @@ export default async function uploadImage(file: File, path: string) : Promise<AP
   let stuff = file.name.split('.');
   path += (path.endsWith("/") ? "" : "/") +`${v4()}.${stuff[stuff.length - 1]}`
 
-  if(global.debug) ShowNotification("info", "path", path)
-
   try {
     const res = await axios({
     url: "https://firebasestorage.googleapis.com/v0/b/jc-oldegg.appspot.com/o?uploadType=media&name=" + path,

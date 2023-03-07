@@ -115,10 +115,27 @@ body {
 
 .content {
   height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .no-select {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15rem);
+  grid-template-rows: auto;
+  justify-items: center;
+  column-gap: 2rem;
+  row-gap: 1rem;
+  padding-bottom: 2rem;
+  width: 100%;
 }

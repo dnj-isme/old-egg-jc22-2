@@ -11,17 +11,17 @@ import Cookies from 'universal-cookie/cjs/Cookies';
 import { emailRegex } from '@/controller/Regex';
 import { useRouter } from 'next/router';
 import { Comp } from '@/components/component';
+import { From } from '@/database/api';
 
 export default function login() {
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errEmail, setErrEmail] = useState<HTMLElement | null>()
   const router = useRouter()
 
   useEffect(() => {
-    const sessionTheme = getTheme(sessionStorage.getItem('theme'))
-    sessionStorage.setItem('theme', sessionTheme.className)
+    const sessionTheme = getTheme(localStorage.getItem('theme'))
+    localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
 
@@ -42,12 +42,16 @@ export default function login() {
     }
   } 
 
-  function handleOneTime(e: FormEvent) {
+  async function handleOneTime(e: FormEvent) {
     e.preventDefault()
 
     if(emailRegex.test(email)) {
       // TODO: Handle One Time Login
-      ShowNotification("info", "In Progress", "Handling One Time Login is in progress...");
+      const res = await From.Rest.fetchData("/onetime", "POST", {email})
+      if(res.success) {
+        console.log(res.data);
+        router.push(`/auth/onetime?id=${res.data.id}&email=${email}`);
+      }
     }
     // TODO: Show Error Message
     else {
@@ -56,7 +60,9 @@ export default function login() {
   }
 
   return (
-    <Auth.Protection MustLogout={true}>
+    <Auth.Protection
+      MustLogout
+    >
       <ThemeContext.Provider value={theme}>
         <ReactNotifications />
         <div className={'main flex-column justify-space-between ' + style.base} style={{backgroundColor: theme.background}}>
@@ -66,11 +72,11 @@ export default function login() {
             </div>
             <h1 style={{color: theme.textColor}}>Sign In</h1>
             <div>
-              <input type="email" name="email" id="email" onChange={e => setEmail(e.target.value)} placeholder="Email Address"/>
+              <input type="email" name="email" id="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email Address"/>
               <p className='error' id='EmailError'> </p>
             </div>
             <div className='invisible' id='password'>
-              <input type="password" name="password" id="password" onChange={e => setPassword(e.target.value)} placeholder="Password"/>
+              <input type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"/>
             </div>
             <div>
               <button className={style.submit} type="submit">SIGN IN</button>

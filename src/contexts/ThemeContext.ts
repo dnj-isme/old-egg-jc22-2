@@ -10,6 +10,7 @@ export type ThemeType = {
   cardBG: string,
   border: string,
   footer: string,
+  sidebar: string
 }
 
 export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
@@ -23,6 +24,7 @@ export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
     border: "transparent",
     button: "#FFF",
     footer: "#0A185C",
+    sidebar: "#F2B179",
   },
   DARK: {
     className: "dark",
@@ -34,6 +36,7 @@ export const Theme:{LIGHT: ThemeType, DARK: ThemeType} = {
     border: "whitesmoke",
     button: "#363636",
     footer: "#121212",
+    sidebar: "#404040",
   },
 }
 

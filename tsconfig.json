@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/controller/AccountAuthentication.tsx.backup", "src/controller/firebase/config.ts", "src/controller/FileUploader.ts", "src/components/home/carousel/carousel.tsx.backup"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/controller/AccountAuthentication.tsx.backup", "src/controller/firebase/config.ts", "src/controller/FileUploader.ts", "src/components/home/carousel/carousel.tsx.backup", "src/controller/CartController.ts", "src/controller/PaginationParser.sx", "src/components/home/top_product.tsx"],
   "exclude": ["node_modules"]
 }

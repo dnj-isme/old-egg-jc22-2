@@ -11,6 +11,7 @@ export interface ProtectionParameter {
   MustAdmin?: boolean,
   MustBusiness?: boolean,
   children: any
+  CustomRule?: boolean
 }
 
 export const Auth = (function() {
@@ -28,6 +29,11 @@ export const Auth = (function() {
       cookies.set("token", result.data.token, {expires: expires, path: "/"});
     }
     return result
+  }
+
+  function setToken(token: string) {
+    const cookies = new Cookies()
+    cookies.set("token", token)
   }
 
   function getToken() {
@@ -85,6 +91,11 @@ export const Auth = (function() {
         router.push("/")
         return null;
       }
+      if(props.CustomRule && !props.CustomRule) {
+        global.unauthorized = true
+        router.back()
+        return null
+      }
     }
 
     return (props.children)
@@ -92,10 +103,11 @@ export const Auth = (function() {
 
   function logout() {
     const cookies = new Cookies()
-    cookies.remove("token");
+    cookies.remove("token", {path: "/"})
+    global.logout = true
   }
 
   return {
-    attemptLogin, getToken, extendSession, getActiveAccount, Protection, logout
+    attemptLogin, getToken, extendSession, getActiveAccount, Protection, logout, setToken
   }
 })()

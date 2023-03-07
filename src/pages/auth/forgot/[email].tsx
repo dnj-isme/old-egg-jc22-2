@@ -8,7 +8,6 @@ import { Auth } from '@/controller/Auth';
 import ShowNotification from '@/controller/NotificationController';
 import { ReactNotifications } from 'react-notifications-component';
 import Cookies from 'universal-cookie/cjs/Cookies';
-import { EmailRegex } from '@/controller/FormatController';
 import { useRouter } from 'next/router';
 import { Comp } from '@/components/component';
 
@@ -18,8 +17,8 @@ export default function login() {
   const router = useRouter()
 
   useEffect(() => {
-    const sessionTheme = getTheme(sessionStorage.getItem('theme'))
-    sessionStorage.setItem('theme', sessionTheme.className)
+    const sessionTheme = getTheme(localStorage.getItem('theme'))
+    localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
     if(router.query.email != undefined && !Array.isArray(router.query.email)) {
       setEmail(router.query.email)

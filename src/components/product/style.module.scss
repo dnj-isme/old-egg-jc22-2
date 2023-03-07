@@ -1,0 +1,46 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+  border-radius: 0.6rem;
+  padding: 2rem 0.8rem;
+
+  .content {
+    .rating {
+      display: flex;
+      .stars {
+        font-size: 1rem;
+        color: #FFC400;
+      }
+    }
+  
+    .title a {
+      cursor: pointer;
+      font-size: 1.6rem;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .price {
+      display: flex;
+      .discount {
+        margin-bottom: auto;
+        margin-top: auto;
+      }
+    }
+  }
+
+  img {
+    width: 10rem;
+  }
+}
+
+.cart {
+  display: flex;
+  width: 100%;
+  padding: 2% 15%;
+  justify-content: space-between;
+  
+}

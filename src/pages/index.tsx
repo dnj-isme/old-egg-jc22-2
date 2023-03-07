@@ -1,26 +1,39 @@
+import { Button, Comp } from '@/components/component'
 import Footer from '@/components/footer/footer'
 import Banner from '@/components/home/banner'
+import TopProduct from '@/components/home/top_product'
 import Navbar from '@/components/navbar/navbar'
+import { ProductCard } from '@/components/product/card'
 import { DEFAULT_THEME, getTheme, Theme, ThemeContext, ThemeType } from '@/contexts/ThemeContext'
 import { Auth } from '@/controller/Auth'
 import ShowNotification from '@/controller/NotificationController'
-import { useEffect, useState } from 'react'
+import ParsePagination, { Pagination } from '@/controller/PaginationParser'
+import { From } from '@/database/api'
+import { SampleQuery } from '@/database/query'
+import { Product } from '@/model/product'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { ReactNotifications } from 'react-notifications-component'
 
+interface Props {
+  products: Product[]
+}
 
 export default function HomePage() {
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
-  let hasDone = false;
   
   useEffect(() => {
     if(global.signin && Auth.getToken() != null) {
-      hasDone = true
       global.signin = false
       ShowNotification("success", "Success", "Login Succeed!")
     }
     if(global.unauthorized) {
       global.unauthorized = false;
       ShowNotification("danger", "Unauthorized", "You don't have access to the site")
+    }
+    if(global.checkout) {
+      global.checkout = false;
+      ShowNotification("success", "Checkout Completed", "Your order is saved and processed by system")
     }
     if(global.logout) {
       global.logout = false;
@@ -30,14 +43,14 @@ export default function HomePage() {
       global.forceLogout = false;
       ShowNotification("danger", "Account logged out", "Your account is logged out due to inactivity")
     }
-    const sessionTheme = getTheme(sessionStorage.getItem('theme'))
-    sessionStorage.setItem('theme', sessionTheme.className)
+
+    const sessionTheme = getTheme(localStorage.getItem('theme'))
+    localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
-
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
-    sessionStorage.setItem('theme', newTheme.className)
+    localStorage.setItem('theme', newTheme.className)
     setTheme(newTheme)
   }
 
@@ -48,6 +61,10 @@ export default function HomePage() {
         <Navbar changeTheme={changeTheme}/>
         <div className='content' style={{backgroundColor: theme.background}}>
           <Banner />
+          <div style={{padding: "3rem"}}>
+            <Comp.H1>Recommended Products</Comp.H1>
+            <TopProduct />
+          </div>
         </div>
         <Footer />
       </div>
