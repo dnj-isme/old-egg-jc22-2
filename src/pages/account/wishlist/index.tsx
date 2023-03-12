@@ -49,7 +49,7 @@ export default function index() {
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
             <div className={style.content}>
-              <Comp.H1>TODO LIST</Comp.H1>
+              <Comp.H1>WishList Page</Comp.H1>
             </div>
           </SidebarTemplate>
           <Footer />
