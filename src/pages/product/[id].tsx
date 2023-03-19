@@ -89,7 +89,7 @@ export default function ProductDetails(props: Product) {
             <div className={`${style.recommendation} grid`}>
               {props.category?.products?.map(product => {
                 if (product.id != props.id)
-                return (<ProductCard.Style1 product={product} />)
+                return (<ProductCard.Style1 route='/product/' product={product} />)
                 else return null
               })}
             </div>

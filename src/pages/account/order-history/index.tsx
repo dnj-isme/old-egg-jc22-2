@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
+import SidebarTemplate from '@/components/base';
+import { Comp } from '@/components/component';
 
-export default function ShopDetails() {
+export default function index() {
   // TODO: Your hooks starts here
   const router = useRouter() // For Navigating
 
@@ -19,9 +21,13 @@ export default function ShopDetails() {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
+    ShowNotification('info', 'In Progress', 'This Page is still in progress...')
   }, [])
 
   // TODO: Your custom logic starts here...
+  function test() {
+    return 'Hello World!'
+  }
 
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
@@ -34,15 +40,18 @@ export default function ShopDetails() {
   return (
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
-      // MustLogin
+      MustLogin
     >
       <ThemeContext.Provider value={theme}>
         <ReactNotifications />
-        <Navbar changeTheme={changeTheme}/>
         <div className='main' style={{backgroundColor: theme.background}}>
-          
+          <Navbar changeTheme={changeTheme}/>
+          <SidebarTemplate>
+            <Comp.H1>Order History</Comp.H1>
+
+          </SidebarTemplate>
+          <Footer />
         </div>
-        <Footer />
       </ThemeContext.Provider>
     </Auth.Protection>
   )

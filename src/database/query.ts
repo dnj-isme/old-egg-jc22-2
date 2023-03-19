@@ -10,23 +10,6 @@ export interface Query {
 }
 
 export const SampleQuery = (function (){
-  const test:Query = {
-    functionName: "experimental",
-    query: `
-      query getAll {
-        experimental {
-          id,
-          message,
-          account {
-            id,
-            first_name,
-            last_name
-          }
-        }
-      }
-    `
-  }
-  
   const banner:Query = {
     functionName: "banners",
     query: `
@@ -45,16 +28,12 @@ export const SampleQuery = (function (){
   const stores: Query = {
     functionName: "storeAccounts",
     query: `
-      query($pagination: PaginationInput!) {
-      query($pagination: PaginationInput!) {
-        storeAccounts(pagination: $pagination) {
+      query($pagination: PaginationInput, $filter: FilterInput) {
+        storeAccounts(pagination: $pagination, filter: $filter) {
           id,
           first_name,
-          last_name,
           email,
           phone,
-          subscribe,
-          status
         }
       }
     `
@@ -63,7 +42,7 @@ export const SampleQuery = (function (){
   const customers: Query = {
     functionName: "customerAccounts",
     query: `
-      query($pagination: PaginationInput!) {
+      query($pagination: PaginationInput) {
         customerAccounts(pagination: $pagination) {
           id,
           first_name,
@@ -80,8 +59,8 @@ export const SampleQuery = (function (){
   const categories: Query = {
     functionName: "categories",
     query: `
-      query {
-        categories {
+      query($filter: String) {
+        categories(filter: $filter) {
           id,
           category_name
         }
@@ -92,24 +71,26 @@ export const SampleQuery = (function (){
   const products: Query = {
     functionName: "products",
     query: `
-      query($pagination: PaginationInput!) {
-        products(pagination: $pagination) {
-          id,
-          product_name,
-          product_stock,
-          product_price,
-          discount,
+      query ($pagination: PaginationInput, $filter: FilterInput) {
+        products(pagination: $pagination, filter: $filter) {
+          id
+          product_name
+          product_stock
+          product_price
+          discount
           product_images {
-            id,
-            image_link
-          },
-          product_specs {
-            id,
-            key,
-            value
-          },
-          store {
             id
+            image_link
+          }
+          product_specs {
+            id
+            key
+            value
+          }
+          store {
+            account {
+              id
+            }
           }
         }
       }
@@ -119,7 +100,7 @@ export const SampleQuery = (function (){
   const categoryByID: Query = {
     functionName: "category",
     query: `
-      query($id: String!, $pagination: PaginationInput!) {
+      query($id: String!, $pagination: PaginationInput) {
         category(id: $id, pagination: $pagination) {
           id,
           category_name,
@@ -139,6 +120,15 @@ export const SampleQuery = (function (){
       }
     `
   }
+
+  const viewStoreReviewUsefulness: Query = {
+    functionName: 'storeReviewUseful',
+    query: `
+      query($account_id: String!, $store_review_id: String!) {
+        storeReviewUseful(account_id: $account_id, store_review_id: $store_review_id)
+      }
+    `
+  }
   
   const productByID: Query = {
     functionName: "product",
@@ -152,22 +142,23 @@ export const SampleQuery = (function (){
           discount,
           description,
           store {
-            id,
-            first_name,
-            email,
-            phone,
-            status
+            account {
+              id,
+              first_name,
+              email,
+              phone,
+              status
+            }
           },
           category {
             category_name,
-            products(pagination: {
-              page: 1,
-              contentsPerPage: 20
-            }) {
+            products {
               id,
               product_name,
+              product_stock,
               product_price,
               discount,
+              description,
               product_images {
                 image_link
               }
@@ -188,7 +179,7 @@ export const SampleQuery = (function (){
   const topProducts: Query = {
     functionName: "topProducts",
     query: `
-      query ($pagination: PaginationInput!) {
+      query ($pagination: PaginationInput) {
         topProducts(pagination: $pagination) {
           id,
           product_name,
@@ -201,8 +192,10 @@ export const SampleQuery = (function (){
           description,
           discount,
           store {
-            id,
-            first_name,
+            account {
+              id,
+              first_name,
+            }
           },
           product_images {
             image_link
@@ -226,8 +219,10 @@ export const SampleQuery = (function (){
             discount,
             description,
             store {
-              id,
-              last_name
+              account {
+                id,
+                last_name
+              }
             },
             category {
               id,
@@ -247,7 +242,135 @@ export const SampleQuery = (function (){
     `
   }
 
+  const storeDetail: Query = {
+    functionName: "storeDetail",
+    query: `
+      query($id: String!) {
+        storeDetail(id: $id) {
+          account {
+            id,
+            first_name,
+            email,
+            phone
+          },
+          banner,
+          return_policy,
+          about
+          sales
+          categories {
+            id,
+            category_name,
+            products {
+              id
+              product_name
+              product_stock
+            }
+          }
+          products {
+            id,
+            product_name,
+            product_stock,
+            product_price,
+            discount,
+            description,
+            product_images {
+              image_link
+            }
+            store {
+              account {
+                id
+              }
+            }
+          }
+          reviews {
+            id
+            account {
+              id
+              first_name
+            }
+            description
+            rating
+            helpful
+            notHelpful
+            created_at
+          }
+        }
+      }
+    `
+  }
+
+  const productsByStoreID: Query = {
+    functionName: "products",
+    query: `
+      query($pagination: PaginationInput, $filter: FilterInput) {
+        products(pagination: $pagination, filter: $filter) {
+          id,
+          product_name,
+          product_stock,
+          product_price,
+          discount,
+          product_images {
+            id,
+            image_link
+          },
+          product_specs {
+            id,
+            key,
+            value
+          },
+          store {
+            account {
+              id
+            }
+          }
+        }
+      }
+    `
+  }
+
+  const countProducts: Query = {
+    functionName: "countProducts",
+    query: `
+      query ($filter:FilterInput) {
+        countProducts(filter: $filter) 
+      }
+    `
+  }
+
+  const storeReviewsByStoreID: Query = {
+    functionName: "storeReviews",
+    query: `
+      query($store_id: String!, $pagination: PaginationInput) {
+        storeReviews(store_id: $store_id, pagination: $pagination) {
+          id
+          account {
+            id,
+            first_name
+          }
+          description
+          rating
+          helpful
+          notHelpful
+          created_at
+        }
+      }
+    `
+  }
+
   return {
-    test, banner, stores, customers, categories, products, categoryByID, productByID, topProducts, cartByID
+    banner, 
+    stores, 
+    customers, 
+    categories, 
+    products, 
+    categoryByID, 
+    productByID, 
+    topProducts, 
+    cartByID, 
+    storeDetail,
+    productsByStoreID,
+    countProducts,
+    storeReviewsByStoreID,
+    viewStoreReviewUsefulness
   }
 })()

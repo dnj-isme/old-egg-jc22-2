@@ -13,14 +13,16 @@ import { SampleQuery } from '@/database/query';
 import { Account } from '@/model/account';
 import { GetServerSidePropsContext } from 'next';
 import CustomerList from '@/components/admin/account/customer_table';
-import ParsePagination, { Pagination } from '@/controller/PaginationParser';
+import ParsePagination, { ParseFilter } from '@/controller/ParseFilter';
 import { PaginationLink } from '@/components/pagination/pagination';
 import SidebarTemplate from '@/components/base';
+import { FilterInput, Pagination } from '@/model/filtering';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const {query} = context
 
   const pagination = ParsePagination(query)
+  const filter = ParseFilter(query)
 
   const res2 = await From.Rest.fetchData("/account/customers/count", "GET")
 
@@ -73,7 +75,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const props: Params = {
     accounts: stores,
     totalPages,
-    pagination
+    pagination,
+    filter
   }
 
   return {
@@ -84,7 +87,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 interface Params {
   accounts: Account[]
   totalPages: number,
-  pagination: Pagination
+  pagination: Pagination,
+  filter: FilterInput
 }
 
 export default function Customers(props: Params) {
@@ -136,7 +140,7 @@ export default function Customers(props: Params) {
                 <Comp.H1>Customer Accounts</Comp.H1>
               </div>
               <CustomerList customers={props.accounts} />
-              <PaginationLink page={props.pagination.page} totalPages={props.totalPages} contensPerPage={props.pagination.contentsPerPage}/>
+              <PaginationLink pagination={props.pagination} filter={props.filter} totalPages={props.totalPages}/>
             </div>
           </SidebarTemplate>
           <Footer />

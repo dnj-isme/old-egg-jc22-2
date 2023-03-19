@@ -70,7 +70,7 @@ function Sidebar({account}: {account: Account | null}) {
           account.business && !account.admin ?
           <>
             <ListItem href='/account/product/create'><Icon icon="fluent-mdl2:product-release" /><Comp.P>Create Product</Comp.P></ListItem>
-            <ListItem href='/account/product'><Icon icon="fluent-mdl2:product-list" /><Comp.P>Manage Product</Comp.P></ListItem>
+            <ListItem href='/account/product?contentsPerPage=50'><Icon icon="fluent-mdl2:product-list" /><Comp.P>Manage Product</Comp.P></ListItem>
           </> : null
         }
         {
@@ -79,10 +79,11 @@ function Sidebar({account}: {account: Account | null}) {
             <ListItem href='/account/admin/account'><Icon icon="material-symbols:account-circle" /><Comp.P>Manage Accounts</Comp.P></ListItem>
             <ListItem href='/account/admin/store'><Icon icon="material-symbols:account-circle" /><Comp.P>Manage Store / Shops</Comp.P></ListItem>
             <ListItem href='/account/admin/promotion'><Icon icon="tabler:speakerphone" /><Comp.P>Manage Promotion Banner</Comp.P></ListItem>
-          
+            <ListItem href='/account/admin/newsletter'><Icon icon="zondicons:news-paper" /><Comp.P>Manage News Letter</Comp.P></ListItem>
           </> : null
         }
-        <ListItem href='' onClick={_ => NotificationTemplate.InProgress("Chat")}><Icon icon="material-symbols:chat-rounded" /><Comp.P>Chat</Comp.P></ListItem>
+        <ListItem onClick={_ => NotificationTemplate.InProgress("Chat")}><Icon icon="material-symbols:chat-rounded" /><Comp.P>Chat</Comp.P></ListItem>
+        <ListItem href='/account/change-password'><Icon icon="material-symbols:key-rounded" /><Comp.P>Change Password</Comp.P></ListItem>
         <ListItem href='/' onClick={handleLogout}><Icon icon="ri:logout-box-r-line" /><Comp.P>Logout</Comp.P></ListItem>
       </ul>
     </div>

@@ -82,7 +82,7 @@ export default function login() {
               <button className={style.submit} type="submit">SIGN IN</button>
             </div>
             <div>
-              <a onClick={(e:any)=>{
+              <a style={{color: theme.textColor}} onClick={(e:any)=>{
                 e.preventDefault()
                 const encode = encodeURIComponent(email)
                 router.push(`forgot/[email]`,`forgot/${encode}`)

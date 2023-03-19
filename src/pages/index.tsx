@@ -7,21 +7,20 @@ import { ProductCard } from '@/components/product/card'
 import { DEFAULT_THEME, getTheme, Theme, ThemeContext, ThemeType } from '@/contexts/ThemeContext'
 import { Auth } from '@/controller/Auth'
 import ShowNotification from '@/controller/NotificationController'
-import ParsePagination, { Pagination } from '@/controller/PaginationParser'
+import ParsePagination from '@/controller/ParseFilter'
+import { emailRegex } from '@/controller/Regex'
 import { From } from '@/database/api'
 import { SampleQuery } from '@/database/query'
 import { Product } from '@/model/product'
+import { Icon } from '@iconify/react'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { FormEvent, Suspense, useEffect, useRef, useState } from 'react'
 import { ReactNotifications } from 'react-notifications-component'
-
-interface Props {
-  products: Product[]
-}
 
 export default function HomePage() {
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
-  
+  const [email, setEmail] = useState('')
+
   useEffect(() => {
     if(global.signin && Auth.getToken() != null) {
       global.signin = false
@@ -48,6 +47,31 @@ export default function HomePage() {
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
   }, [])
+
+  async function handleSubscribe(e: FormEvent) {
+    e.preventDefault()
+    
+    if(email == '') {
+      ShowNotification("danger", "Error", "Email cannot be empty!")
+      return
+    }
+    if(!emailRegex.test(email)) {
+      ShowNotification("danger", "Error", "Email must be in valid format!")
+      return
+    }
+
+    const res = await From.Rest.fetchData("/subscribe", "POST", {
+      email
+    })
+
+    if(res.success) {
+      ShowNotification("success", "Success", res.data.status)
+    }
+    else {
+      ShowNotification("danger", "Failed", res.data)
+    }
+  }
+
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
     localStorage.setItem('theme', newTheme.className)
@@ -65,6 +89,13 @@ export default function HomePage() {
             <Comp.H1>Recommended Products</Comp.H1>
             <TopProduct />
           </div>
+          <form className='center' onSubmit={handleSubscribe}>
+            <Comp.H2>Subscribe to newsletter</Comp.H2>
+            <div>
+              <input type="email" name="email" id="email" placeholder='email' onChange={e => setEmail(e.target.value)}/>
+              <Button.Submit><Icon icon="ic:sharp-send" /></Button.Submit>
+            </div>
+          </form>
         </div>
         <Footer />
       </div>

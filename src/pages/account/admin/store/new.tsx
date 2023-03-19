@@ -71,7 +71,7 @@ export default function index() {
     }
 
     if(valid) {
-      let res: APIResponse = await From.Rest.fetchData("/account/business", "POST", {
+      let res: APIResponse = await From.Rest.fetchData("/account/business/", "POST", {
         name: name,
         email: email,
         phone: phone,
@@ -107,7 +107,7 @@ export default function index() {
           <div className={style.content} style={{backgroundColor: theme.background}}>
             <Comp.H1>Create Account</Comp.H1>
             
-            <form method="post" onSubmit={handleCreateAccount} className="flex-column align-center" >
+            <form method='POST' onSubmit={handleCreateAccount} className="flex-column align-center" >
               <table> <tbody>
                 <tr>
                   <td><label htmlFor='name' style={{color: theme.textColor}}>Business Name</label></td>

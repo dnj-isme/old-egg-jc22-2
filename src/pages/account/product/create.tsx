@@ -158,7 +158,7 @@ export default function Insert(props: Props) {
         product_name: name,
         product_price: price,
         product_stock: stock,
-        product_specs: data,
+        specs: data,
         store_id: account_id,
         image_links: imageLinks
       }

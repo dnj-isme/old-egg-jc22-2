@@ -13,8 +13,9 @@ import { From } from '@/database/api';
 import { SampleQuery } from '@/database/query';
 import { ProductCard } from '@/components/product/card';
 import style from "./style.module.scss"
-import ParsePagination, { Pagination } from '@/controller/PaginationParser';
+import ParsePagination from '@/controller/ParseFilter';
 import { PaginationLink } from '@/components/pagination/pagination';
+import { Pagination } from '@/model/filtering';
 
 interface Props {
   category: Category,
@@ -61,6 +62,8 @@ export default function FindCategory(props: Props) {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
+
+    
   }, [])
 
   function changeTheme() {
@@ -89,10 +92,10 @@ export default function FindCategory(props: Props) {
                 <Comp.H1>{props.category.category_name}</Comp.H1>
                 <div className="grid">
                   {props.category.products?.map(data => (
-                    <ProductCard.Style1 product={data} />
+                    <ProductCard.Style1 route='/product/' product={data} />
                   ))}
                 </div>
-                <PaginationLink page={props.pagination.page} contensPerPage={props.pagination.contentsPerPage} totalPages={Math.ceil(props.category.product_count / props.pagination.contentsPerPage)} />
+                <PaginationLink pagination={props.pagination} totalPages={Math.ceil(props.category.product_count / props.pagination.contentsPerPage)} />
               </>
             }
           </div>

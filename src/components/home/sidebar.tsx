@@ -39,7 +39,7 @@ export default function Sidebar() {
     <div className={style.sidebar}>
       {categories.map(data => (
         <div style={{backgroundColor: theme.background2}}>
-          <a style={{color: theme.textColor}} href={"/category/"+data.id}>
+          <a style={{color: theme.textColor}} href={"/search?category_id="+data.id}>
             <div>
               <Comp.P>{data.category_name}</Comp.P>
               <Icon icon="material-symbols:chevron-right-sharp" />

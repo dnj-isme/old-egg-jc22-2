@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
+import SidebarTemplate from '@/components/base';
 import { Comp } from '@/components/component';
-import Topbar from '@/components/shop/topbar/topbar';
 
-export default function index() {
+export default function admin() {
   // TODO: Your hooks starts here
   const router = useRouter() // For Navigating
 
@@ -41,18 +41,15 @@ export default function index() {
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
       MustLogin
-      MustBusiness
+      MustAdmin
     >
       <ThemeContext.Provider value={theme}>
-        <div className='main'>
-          <ReactNotifications />
-          <div>
-            <Navbar changeTheme={changeTheme}/>
-            <Topbar />
-          </div>
-          <div className='content' style={{backgroundColor: theme.background}}>
-            {test()}
-          </div>
+        <ReactNotifications />
+        <div className='main' style={{backgroundColor: theme.background}}>
+          <Navbar changeTheme={changeTheme}/>
+          <SidebarTemplate>
+            <Comp.H1>{test()}</Comp.H1>
+          </SidebarTemplate>
           <Footer />
         </div>
       </ThemeContext.Provider>

@@ -2,6 +2,7 @@ import { APIResponse, From } from "@/database/api"
 import { SampleQuery } from "@/database/query"
 import { Account } from "./account";
 import { empty } from "./default";
+import { StoreDetail } from "./store";
 
 export interface Category {
   id: string,
@@ -20,9 +21,9 @@ export interface Product {
   description: string,
   category_id: string,
 
-  store?: Account,
+  store?: StoreDetail,
   category?: Category,
-  product_specs?: Spec[]
+  specs?: Spec[]
   image_links?: string[]
   product_images?: ProductImage[]
 }

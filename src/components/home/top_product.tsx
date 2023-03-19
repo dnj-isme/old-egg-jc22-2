@@ -1,6 +1,6 @@
 import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/ThemeContext';
 import ShowNotification, { NotificationTemplate } from '@/controller/NotificationController';
-import { Pagination } from '@/controller/PaginationParser';
+import { Pagination } from '@/controller/ParseFilter';
 import { From } from '@/database/api';
 import { SampleQuery } from '@/database/query';
 import { Product } from '@/model/product';
@@ -62,7 +62,7 @@ export default function TopProduct() {
   return(
     <>
       <div className='grid'>
-        {products.map(prod => (<ProductCard.Style1 product={prod} />))}
+        {products.map(prod => (<ProductCard.Style1 route="/product/" product={prod} />))}
       </div>
       <div style={{alignSelf: "center"}}>
         <Button.Blue onClick={_ => setPage(page + 1)}>Show More</Button.Blue>

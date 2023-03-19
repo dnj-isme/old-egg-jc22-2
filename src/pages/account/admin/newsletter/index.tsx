@@ -7,6 +7,7 @@ import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
+import { Button, Comp } from '@/components/component';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -14,6 +15,8 @@ export default function index() {
 
   // TODO: Your useState starts here
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
+  const [header, setHeader] = useState('')
+  const [body, setBody] = useState('')
 
   // TODO: Your useEffect starts here
   useEffect(() => {
@@ -24,10 +27,6 @@ export default function index() {
   }, [])
 
   // TODO: Your custom logic starts here...
-  function test() {
-    return 'Hello World!'
-  }
-
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
     localStorage.setItem('theme', newTheme.className)
@@ -40,17 +39,32 @@ export default function index() {
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
       MustLogin
-      MustBusiness
+      MustAdmin
     >
       <ThemeContext.Provider value={theme}>
-        <div className='main'>
-          <ReactNotifications />
+        <ReactNotifications />
+        <div className='main' style={{backgroundColor: theme.background}}>
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
-            <div className='content' style={{backgroundColor: theme.background}}>
-              
+            <div className='center'>
+              <Comp.H1>Manage News Letter</Comp.H1>
+              <form className='center'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><Comp.Label htmlFor="header">Email Header</Comp.Label></td>
+                      <td><input type="text" name="header" id="header" onChange={e => setHeader(e.target.value)} /></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.Label htmlFor="body">Email Body</Comp.Label></td>
+                      <td><textarea id='body' onChange={e => setBody(e.target.value)}/></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Button.Blue>Send Email</Button.Blue>
+              </form>
             </div>
-          </SidebarTemplate>
+          </SidebarTemplate>          
           <Footer />
         </div>
       </ThemeContext.Provider>

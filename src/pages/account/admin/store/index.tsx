@@ -14,62 +14,53 @@ import { SampleQuery } from '@/database/query';
 import { Account } from '@/model/account';
 import { GetServerSidePropsContext } from 'next';
 import { PaginationLink } from '@/components/pagination/pagination';
-import { Pagination } from '@/controller/PaginationParser';
+import ParsePagination, { ParseFilter } from '@/controller/ParseFilter';
 import SidebarTemplate from '@/components/base';
+import { FilterInput, Pagination } from '@/model/filtering';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const {query} = context
   
-  let page = 1;
-  let contentsPerPage = 20;
-  if(query?.page && !Array.isArray(query.page)) {
-    page = parseInt(query.page)
-  }
-
-  if(query?.contentsPerPage && !Array.isArray(query.contentsPerPage)) {
-    contentsPerPage = parseInt(query.contentsPerPage)
-  }
+  const pagination = ParsePagination(query)
+  const filter = ParseFilter(query)
 
   const res2 = await From.Rest.fetchData("/account/business/count", "GET")
 
   let totalPages = 1;
   if(res2.success) {
     console.log(res2.data);
-    totalPages = Math.ceil(res2.data.length / contentsPerPage)
+    totalPages = Math.ceil(res2.data.length / pagination.contentsPerPage)
   }
   else {
     console.error(res2.raw);
   }
 
-  if(page < 0) {
+  if(pagination.page < 0) {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/shop?page=1"
+        destination: "?page=1"
       },
       props: {
-        contentsPerPage
+        contentsPerPage: pagination.contentsPerPage
       }
     }
   }
 
-  if(page > totalPages) {
+  if(pagination.page > totalPages) {
     return {
       redirect: {
         permanent: false,
-        destination: "/admin/shop?page=" + totalPages
+        destination: "?page=" + totalPages
       },
       props: {
-        contentsPerPage
+        contentsPerPage: pagination.contentsPerPage
       }
     }
   }
 
   const res = await From.Graphql.execute(SampleQuery.stores, {
-    pagination: {
-      page,
-      contentsPerPage
-    }
+    pagination
   })
 
   let stores: Account[] = []
@@ -83,11 +74,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const props: Params = {
     accounts: stores,
-    pagination: {
-      contentsPerPage,
-      page
-    },
-    totalPages
+    pagination,
+    totalPages,
+    filter
   }
 
   return {
@@ -98,7 +87,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 interface Params {
   accounts: Account[],
   pagination: Pagination,
-  totalPages: number
+  totalPages: number,
+  filter: FilterInput
 }
 
 export default function Shop(props: Params) {
@@ -150,10 +140,10 @@ export default function Shop(props: Params) {
                 <Comp.H1>Shop Account</Comp.H1>
               </div>
               <div>
-                <Button.Blue onClick={_ => router.push("shop/new")}>Add Shop</Button.Blue>
+                <Button.Blue onClick={_ => router.push("store/new")}>Add Shop</Button.Blue>
               </div>
               <StoreList stores={props.accounts} />
-              <PaginationLink page={props.pagination.page} totalPages={props.totalPages} contensPerPage={props.pagination.contentsPerPage}/>
+              <PaginationLink pagination={props.pagination} totalPages={props.totalPages} filter={props.filter}/>
             </div>
           </SidebarTemplate>
           <Footer />

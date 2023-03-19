@@ -91,7 +91,7 @@ export default function index(props: Props) {
               <Button.Blue onClick={_ => router.push("product/create")}>Create Product</Button.Blue>
               <div className={style.grid}>
                 {props.products.map(data => (
-                  <ProductCard.Style1 product={data} />
+                  <ProductCard.Style1 route="/account/product" product={data} />
                 ))}
               </div>
             </div>

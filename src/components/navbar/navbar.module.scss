@@ -84,11 +84,12 @@ $anim: all 0.2s;
       // max-width: 100vw;
       width: 100%;
 
-      .input {
+      .search {
         border-radius: 20rem;
         min-width: 10rem;
         width: 100%;
         height: $height;
+        padding-left: 1rem;
       }
 
       .submit {
@@ -194,6 +195,12 @@ $anim: all 0.2s;
         background-color: $hover-color;
       }
     }
+  }
+  .recommendation {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
   }
 }
 

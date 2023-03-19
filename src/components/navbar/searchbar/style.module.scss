@@ -1,0 +1,25 @@
+.component {
+  height: 3rem;
+  width: 15rem;
+
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0.2rem 0.8rem;
+
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+  
+  .product {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    img {
+      height: 3rem;
+    }
+  }
+}

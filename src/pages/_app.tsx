@@ -14,8 +14,10 @@ declare global {
   var ban: boolean
   var unban: boolean
   var checkout: boolean
+  var reset: boolean
 }
 global.debug = true
+global.reset = false
 global.checkout = false
 global.signin = false
 global.unauthorized = false

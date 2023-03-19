@@ -26,7 +26,7 @@ export default async function uploadImage(file: File, path: string) : Promise<AP
       data: file
     })
 
-    path = path.replace("/", "%2F")
+    path = path.replaceAll("/", "%2F")
     return {
       data: "https://firebasestorage.googleapis.com/v0/b/jc-oldegg.appspot.com/o/" + path + "?alt=media",
       raw: res,

@@ -1,4 +1,4 @@
-import { ThemeContext } from "@/contexts/ThemeContext"
+import { Theme, ThemeContext } from "@/contexts/ThemeContext"
 import { ButtonHTMLAttributes, MouseEvent, useContext } from "react"
 import btn_style from "./button-component.module.scss"
 
@@ -19,6 +19,13 @@ export const Comp = (function() {
       <h1 style={{color: theme.textColor}} className={className} {...args}>{children}</h1>
     )
   }
+  function H2({children, className, ...args}: {children: any, className?: string}) {
+    const theme = useContext(ThemeContext)
+  
+    return (
+      <h2 style={{color: theme.textColor}} className={className} {...args}>{children}</h2>
+    )
+  }
 
   function A({children, href, onClick, className, ...args}: {children: any, onClick?: (e: MouseEvent) => any, href?: string, className?: string}) {
     const theme = useContext(ThemeContext)
@@ -36,6 +43,14 @@ export const Comp = (function() {
     )
   }
 
+  function Label({children, htmlFor, className, ...args}: {children?: any, htmlFor?: string, className?: string}) {
+    const theme = useContext(ThemeContext)
+
+    return (
+      <label htmlFor={htmlFor} className={className} {...args} style={{color: theme.textColor}}>{children}</label>
+    )
+  }
+
   function Div2({children, className, ...args}: {children:any, className?: string}) {
     const theme = useContext(ThemeContext)
   
@@ -45,14 +60,14 @@ export const Comp = (function() {
   }
 
   return {
-    P, A, Div, Div2, H1
+    P, A, Div, Div2, H1, H2, Label
   }
 })()
 
 export interface ButtonParams {
   onClick? : (e: MouseEvent) => any,
   children: null | JSX.Element | JSX.Element[] | string,
-  type?: "button" | "submit" | "reset"
+  type?: 'button' | 'submit' | 'reset' | "button" | "submit" | "reset"
 }
 
 export const Button = {
@@ -85,18 +100,18 @@ export const Button = {
   },
   
   Green: (params: ButtonParams) => {
-    return <button className={btn_style.green} type="button" onClick={params.onClick}>{params.children}</button>
+    return <button className={btn_style.green} type={params.type ? params.type : "button"} onClick={params.onClick}>{params.children}</button>
   },
   
   Yellow: (params: ButtonParams) => {
-    return <button className={btn_style.yellow} type="button" onClick={params.onClick}>{params.children}</button>
+    return <button className={btn_style.yellow} type={params.type ? params.type : "button"} onClick={params.onClick}>{params.children}</button>
   },
   
   Red: (params: ButtonParams) => {
-    return <button className={btn_style.red} type="button" onClick={params.onClick}>{params.children}</button>
+    return <button className={btn_style.red} type={params.type ? params.type : "button"} onClick={params.onClick}>{params.children}</button>
   },
   
   Blue: (params: ButtonParams) => {
-    return <button className={btn_style.blue} type="button" onClick={params.onClick}>{params.children}</button>
+    return <button className={btn_style.blue} type={params.type ? params.type : "button"} onClick={params.onClick}>{params.children}</button>
   }
 }

@@ -1,0 +1,35 @@
+.component {
+  display: flex;
+  flex-direction: row;
+  .left {
+    height: 100%;
+    width: 30vw;
+    padding: 1rem 3rem;
+
+    ul {
+      list-style: none;
+      li {
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      h1 {
+        margin-top: 2rem;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: row;
+      input {
+        padding-left: 0.4rem;
+        margin-right: 0.5rem;
+      }
+    }
+    
+  }
+  .right {
+    height: 100%;
+    width: 70vw;
+    overflow-x: auto;
+  }
+}

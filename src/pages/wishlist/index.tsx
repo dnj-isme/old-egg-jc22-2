@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
-import { Comp } from '@/components/component';
-import Topbar from '@/components/shop/topbar/topbar';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -40,18 +38,16 @@ export default function index() {
   return (
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
-      MustLogin
-      MustBusiness
+      // MustLogin
     >
       <ThemeContext.Provider value={theme}>
-        <div className='main'>
-          <ReactNotifications />
-          <div>
-            <Navbar changeTheme={changeTheme}/>
-            <Topbar />
-          </div>
-          <div className='content' style={{backgroundColor: theme.background}}>
+        <ReactNotifications />
+        <div className='main' style={{backgroundColor: theme.background}}>
+          <Navbar changeTheme={changeTheme}/>
+          <div className='content'>
+            {/* TODO: Your HTML code starts here */}
             {test()}
+            
           </div>
           <Footer />
         </div>

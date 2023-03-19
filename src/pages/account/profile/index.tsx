@@ -9,6 +9,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
 import { Comp } from '@/components/component';
 import style from "./index.module.scss"
+import { Account } from '@/model/account';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -22,9 +23,27 @@ export default function index() {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
+    fetchAccount()
   }, [])
 
   // TODO: Your custom logic starts here...
+  async function fetchAccount() {
+    const account = await Auth.getActiveAccount()
+    if(account) {
+      if(account.business) {
+        router.push("profile/shop")
+      }
+      else if(account.admin) {
+        router.push("profile/admin")
+      }
+      else {
+        router.push("profile/customer")
+      }
+    }
+    else {
+      router.push("/")
+    }
+  }
 
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
@@ -44,7 +63,7 @@ export default function index() {
         <div className='main' style={{backgroundColor: theme.background}}>
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
-            <Comp.H1>Hello World!</Comp.H1>
+            
           </SidebarTemplate>
           <Footer />
         </div>

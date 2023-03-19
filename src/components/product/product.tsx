@@ -32,33 +32,38 @@ export const ProductDisplay = {
               <Comp.H1>{props.product.product_name}</Comp.H1>
             </div>
             <div className={style.store}>
-              <Comp.A href={props.product.store ? "/shop/" + props.product.store.id : ""}>{props.product.store?.first_name}</Comp.A>
+              <Comp.A href={props.product.store ? "/shop/" + props.product.store.account.id : ""}>{props.product.store?.account.first_name}</Comp.A>
             </div>
             <div className={style.rating}>
               <Comp.P>Rating In Progress</Comp.P>
             </div>
             <div className={style.details}>
               <div className={style.description}>
+                <Comp.P>{props.product.product_stock} item(s) left</Comp.P>
                 <Comp.P>{props.product.description}</Comp.P>
               </div>
-              <div className={style.specs}>
-                <table>
-                  <thead>
-                    <tr>
-                      <td style={{color: theme.textColor}}>Specs</td>
-                      <td style={{color: theme.textColor}}>Details</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {props.product.product_specs?.map(spec => (
+              {
+                props.product.specs && props.product.specs.length > 0?
+                <div className={style.specs}>
+                  <table>
+                    <thead>
                       <tr>
-                        <td style={{color: theme.textColor}}>{spec.key}</td>
-                        <td style={{color: theme.textColor}}>{spec.value}</td>
+                        <td style={{color: theme.textColor}}>Specs</td>
+                        <td style={{color: theme.textColor}}>Details</td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {props.product.specs?.map(spec => (
+                        <tr>
+                          <td style={{color: theme.textColor}}>{spec.key}</td>
+                          <td style={{color: theme.textColor}}>{spec.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                : null
+              }
             </div>
           </div>
           <div className={style.action}>
@@ -69,7 +74,6 @@ export const ProductDisplay = {
     )
   },
   Action: function(props: Props) {
-    const theme = useContext(ThemeContext) // For Theme
     const router = useRouter() // For Navigating
 
     const [qty, setQty] = useState(0)
@@ -96,6 +100,10 @@ export const ProductDisplay = {
           return
         }
         else {
+          if(props.product.product_stock < qty) {
+            ShowNotification("warning", "Error", "The quantity is less then the actual stock")
+            return;
+          }
           CartController.AddToCart(account, props.product, qty)
           setAdded(true)
         }

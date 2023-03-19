@@ -1,6 +1,6 @@
 import { NOTIFICATION_TYPE, Store } from 'react-notifications-component';
 
-export default function ShowNotification(type: NOTIFICATION_TYPE, title: string, message: string) {
+export default function ShowNotification(type: NOTIFICATION_TYPE = 'info', title: string = 'Information', message: string = 'Sample Message') {
   Store.addNotification({
     title: title,
     message: message,

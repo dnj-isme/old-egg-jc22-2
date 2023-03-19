@@ -28,6 +28,8 @@ export default function Carousel() {
       data.forEach((img:Banner) => {
         l.push(img)
       })
+      console.log(l);
+
       setLinks(l)
     }
   }

@@ -7,28 +7,35 @@ import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
-import style from "./style.module.scss"
 import { Comp } from '@/components/component';
+import { Account } from '@/model/account';
 
-export default function index() {
+export default function customer() {
   // TODO: Your hooks starts here
   const router = useRouter() // For Navigating
 
   // TODO: Your useState starts here
   const [theme, setTheme] = useState<ThemeType>(DEFAULT_THEME)
+  const [account, setAccount] = useState<Account | null>()
 
   // TODO: Your useEffect starts here
   useEffect(() => {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
-    ShowNotification('info', 'In Progress', 'This Page is still in progress...')
+    fetchAccount()
   }, [])
 
-  // TODO: Your custom logic starts here...
-  function test() {
-    return 'Hello World!'
+  async function fetchAccount() {
+    const account = await Auth.getActiveAccount()
+    setAccount(account)
+
+    if(!account) {
+      ShowNotification("danger", "Error", "failed to fetch data!")
+    }
   }
+
+  // TODO: Your custom logic starts here...
 
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
@@ -48,8 +55,28 @@ export default function index() {
         <div className='main' style={{backgroundColor: theme.background}}>
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
-            <div className={style.content}>
-              <Comp.H1>WishList Page</Comp.H1>
+            <div className='center'>
+              <Comp.H1>Profile Page</Comp.H1>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label htmlFor="first_name">First Name</label></td>
+                    <td><input id='first_name' type="text" value={account?.first_name}/></td>
+                  </tr>
+                  <tr>
+                    <td><label htmlFor="last_name">Last Name</label></td>
+                    <td><input id='last_name' type="text" value={account?.last_name}/></td>
+                  </tr>
+                  <tr>
+                    <td><label htmlFor="email">Email</label></td>
+                    <td><input id='email' type="text" value={account?.email}/></td>
+                  </tr>
+                  <tr>
+                    <td><label htmlFor="phone">Phone</label></td>
+                    <td><input id='phone' type="text" value={account?.first_name}/></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </SidebarTemplate>
           <Footer />

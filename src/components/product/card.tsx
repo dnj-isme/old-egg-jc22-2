@@ -12,6 +12,7 @@ import style from "./style.module.scss"
 
 interface Props {
   product: Product
+  route: string
 }
 
 interface Props2 {
@@ -28,11 +29,12 @@ export const ProductCard = {
 
     async function handleNavigate(e: MouseEvent) {
       e.preventDefault()
-      const account = await Auth.getActiveAccount()
-      if(account && account.id == props.product.store?.id) {
-        router.push('product/' + props.product.id)
-      }
-      router.push("/product/" + props.product.id)
+      
+      router.push(
+        props.route + 
+        (!props.route.endsWith("/") ? "/" : "") +
+        props.product.id
+      )
     }
     
     // TODO: Put UseState Stuff here
@@ -44,11 +46,11 @@ export const ProductCard = {
         <div className={style.content}>
           <div className={style.rating}>
             <div className={style.stars}>
-              <Icon icon="dashicons:star-filled" />
-              <Icon icon="dashicons:star-filled" />
-              <Icon icon="dashicons:star-filled" />
-              <Icon icon="dashicons:star-half" />
-              <Icon icon="dashicons:star-empty" />
+              <Icon icon="dashicons:star-filled" className='star'/>
+              <Icon icon="dashicons:star-filled" className='star'/>
+              <Icon icon="dashicons:star-filled" className='star'/>
+              <Icon icon="dashicons:star-half" className='star'/>
+              <Icon icon="dashicons:star-empty" className='star'/>
             </div>
             <div>
               <Comp.P>4.5 (20) !In Progress</Comp.P>
@@ -63,6 +65,13 @@ export const ProductCard = {
               props.product.discount > 0 ? 
               <Comp.P className={style.discount}><del>${props.product.product_price}</del> In Progress</Comp.P>
               : null
+            }
+          </div>
+          <div className={style.quantity}>
+            {
+              props.product.product_stock > 0 ?
+              <Comp.P>{props.product.product_stock} Item(s) Left</Comp.P>
+              : <Comp.P>Sold out</Comp.P>
             }
           </div>
         </div>
