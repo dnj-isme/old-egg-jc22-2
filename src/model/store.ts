@@ -21,6 +21,8 @@ export interface StoreReviews {
   rating: number
   created_at: string,
 
+  store?: StoreDetail
+
   helpful: number
   notHelpful: number
 }

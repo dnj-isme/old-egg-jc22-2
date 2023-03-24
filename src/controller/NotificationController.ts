@@ -26,5 +26,8 @@ export const NotificationTemplate = {
   },
   InProgress: function(progress?: string) {
     ShowNotification("info", "In Progress", `Process "${progress}" is under construction!`)
+  },
+  Failed: function(progress?: string) {
+    ShowNotification("danger", "Failed", `Failed to ${progress ? progress : "execute something"}`)
   }
 }

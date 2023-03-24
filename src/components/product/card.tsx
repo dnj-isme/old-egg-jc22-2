@@ -1,9 +1,11 @@
 import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/ThemeContext';
 import { Auth } from '@/controller/Auth';
 import ShowNotification, { NotificationTemplate } from '@/controller/NotificationController';
+import { GetStars } from '@/controller/Utility';
 import { From } from '@/database/api';
 import { CartItem } from '@/model/cart';
 import { Product } from '@/model/product';
+import { Transaction, TransactionDetail } from '@/model/transaction';
 import { Icon } from '@iconify/react';
 import { useRouter } from 'next/router';
 import { MouseEvent, useContext, useEffect, useState } from 'react';
@@ -19,6 +21,10 @@ interface Props2 {
   index: number
   cart_item: CartItem,
   onQuantityChange: (idx: number, new_qty: number) => any
+}
+
+interface Props3 {
+  detail: TransactionDetail
 }
 
 export const ProductCard = {
@@ -46,11 +52,7 @@ export const ProductCard = {
         <div className={style.content}>
           <div className={style.rating}>
             <div className={style.stars}>
-              <Icon icon="dashicons:star-filled" className='star'/>
-              <Icon icon="dashicons:star-filled" className='star'/>
-              <Icon icon="dashicons:star-filled" className='star'/>
-              <Icon icon="dashicons:star-half" className='star'/>
-              <Icon icon="dashicons:star-empty" className='star'/>
+              {GetStars(3.5)}
             </div>
             <div>
               <Comp.P>4.5 (20) !In Progress</Comp.P>
@@ -134,6 +136,26 @@ export const ProductCard = {
           <div className={style.action}>
             <Button.Delete onClick={handleDelete} />
           </div>
+        </div>
+      </div>
+    )
+  },
+  Transaction: function(props: Props3) {
+
+    const theme = useContext(ThemeContext)
+
+    const {detail} = props
+
+    return (
+      <div className={style.cart}>
+        <div className={style.left}>
+          <img src={detail.product?.product_images ? detail.product?.product_images [0].image_link : ""} />
+        </div>
+        <div className={style.right}>
+          <Comp.H1>{detail.product?.product_name}</Comp.H1>
+          {detail.product && detail.product.discount > 0 ? <Comp.P><del>$ {detail.product.discount}</del></Comp.P> : null}
+          <Comp.P>$ {detail.product?.product_price && detail.product?.product_price - detail.product?.discount}</Comp.P>
+          <Comp.P>Quantity: {detail.quantity}</Comp.P>
         </div>
       </div>
     )

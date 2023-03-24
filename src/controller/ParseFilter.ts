@@ -1,4 +1,4 @@
-import { FilterInput, Pagination } from "@/model/filtering";
+import { FilterInput, Pagination, WishlistFilterInput } from "@/model/filtering";
 import { ParsedUrlQuery } from "querystring";
 
 
@@ -49,7 +49,7 @@ export function ParseFilter(query: ParsedUrlQuery): FilterInput {
   return output
 }
 
-export function GetQueryString(pagination?: Pagination, filter?: FilterInput) {
+export function GetQueryString(pagination?: Pagination, filter?: FilterInput, wishlist_filter?: WishlistFilterInput) {
   let output = "?"
   
   if(pagination) {
@@ -83,6 +83,12 @@ export function GetQueryString(pagination?: Pagination, filter?: FilterInput) {
     }
     if(order_by_bought) {
       output += `order_by_bought=${order_by_bought}&`
+    }
+  }
+
+  if(wishlist_filter) {
+    if(wishlist_filter.search) {
+      output += `search=${wishlist_filter.search}&`
     }
   }
 

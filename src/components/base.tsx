@@ -63,7 +63,10 @@ function Sidebar({account}: {account: Account | null}) {
           <>
             <ListItem href='/account/cart'><Icon icon="ic:outline-shopping-cart" /><Comp.P>View Cart</Comp.P></ListItem>
             <ListItem href='/account/order-history'><Icon icon="material-symbols:history" /><Comp.P>Order History</Comp.P></ListItem>
-            <ListItem href='/account/wish-list'><Icon icon="mdi:cart-heart" /><Comp.P>Wish List</Comp.P></ListItem>
+            <ListItem href='/account/wishlist'><Icon icon="mdi:cart-heart" /><Comp.P>My Wish List</Comp.P></ListItem>
+            <ListItem href='/account/wishlist/followed'><Icon icon="mdi:cart-heart" /><Comp.P>Followed Wish List</Comp.P></ListItem>
+            <ListItem href='/account/voucher'><Icon icon="mdi:voucher-outline" /><Comp.P>Use Voucher</Comp.P></ListItem>
+            <ListItem href='/account/review'><Icon icon="fluent:person-feedback-20-regular" /><Comp.P>View Created Reviews</Comp.P></ListItem>
           </> : null 
         }
         {
@@ -71,6 +74,7 @@ function Sidebar({account}: {account: Account | null}) {
           <>
             <ListItem href='/account/product/create'><Icon icon="fluent-mdl2:product-release" /><Comp.P>Create Product</Comp.P></ListItem>
             <ListItem href='/account/product?contentsPerPage=50'><Icon icon="fluent-mdl2:product-list" /><Comp.P>Manage Product</Comp.P></ListItem>
+            <ListItem href='/account/feedback'><Icon icon="fluent:person-feedback-20-regular" /><Comp.P>View Feedback</Comp.P></ListItem>
           </> : null
         }
         {
@@ -80,9 +84,11 @@ function Sidebar({account}: {account: Account | null}) {
             <ListItem href='/account/admin/store'><Icon icon="material-symbols:account-circle" /><Comp.P>Manage Store / Shops</Comp.P></ListItem>
             <ListItem href='/account/admin/promotion'><Icon icon="tabler:speakerphone" /><Comp.P>Manage Promotion Banner</Comp.P></ListItem>
             <ListItem href='/account/admin/newsletter'><Icon icon="zondicons:news-paper" /><Comp.P>Manage News Letter</Comp.P></ListItem>
+            <ListItem href='/account/admin/voucher'><Icon icon="mdi:voucher-outline" /><Comp.P>Manage Voucher</Comp.P></ListItem>
+            <ListItem href='/account/chat/manage'><Icon icon="material-symbols:chat-rounded" /><Comp.P>Manage Chat</Comp.P></ListItem>
           </> : null
         }
-        <ListItem onClick={_ => NotificationTemplate.InProgress("Chat")}><Icon icon="material-symbols:chat-rounded" /><Comp.P>Chat</Comp.P></ListItem>
+        <ListItem href='/account/chat'><Icon icon="material-symbols:chat-rounded" /><Comp.P>Chat</Comp.P></ListItem>
         <ListItem href='/account/change-password'><Icon icon="material-symbols:key-rounded" /><Comp.P>Change Password</Comp.P></ListItem>
         <ListItem href='/' onClick={handleLogout}><Icon icon="ri:logout-box-r-line" /><Comp.P>Logout</Comp.P></ListItem>
       </ul>

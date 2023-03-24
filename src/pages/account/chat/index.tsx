@@ -7,6 +7,10 @@ import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
+import { Comp } from '@/components/component';
+
+import style from "./style.module.scss"
+import ChatElement from '@/components/chat/base';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -24,9 +28,6 @@ export default function index() {
   }, [])
 
   // TODO: Your custom logic starts here...
-  function test() {
-    return 'Hello World!'
-  }
 
   function changeTheme() {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
@@ -40,15 +41,15 @@ export default function index() {
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
       MustLogin
-      MustBusiness
     >
       <ThemeContext.Provider value={theme}>
-        <div className='main'>
-          <ReactNotifications />
+        <ReactNotifications />
+        <div className='main' style={{backgroundColor: theme.background2}}>
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
-            <div className='content' style={{backgroundColor: theme.background}}>
-              
+            <div className='center'>
+              <Comp.H1>Chat Page</Comp.H1>
+              <ChatElement />
             </div>
           </SidebarTemplate>
           <Footer />

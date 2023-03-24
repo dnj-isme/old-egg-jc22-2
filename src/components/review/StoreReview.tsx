@@ -138,10 +138,13 @@ export default function StoreReview(props: Props) {
         {GetStars(review.rating)}
         <Comp.P>{review.created_at}</Comp.P>
         <Comp.P>{review.description}</Comp.P>
-        <div>
-          <Button.Blue onClick={handleHelpful}><>👍 {helpful}</></Button.Blue>
-          <Button.Blue onClick={handleNotHelpful}><>👎 {notHelpful}</></Button.Blue>
-        </div>
+        {
+          account?.id != review.store?.account.id ? null : 
+          <div>
+            <Button.Blue onClick={handleHelpful}><>👍 {helpful}</></Button.Blue>
+            <Button.Blue onClick={handleNotHelpful}><>👎 {notHelpful}</></Button.Blue>
+          </div>
+        }
       </div>
     </div>
   )

@@ -2,12 +2,13 @@ import { DEFAULT_THEME, getTheme, Theme, ThemeContext, ThemeType } from '@/conte
 import { Auth } from '@/controller/Auth';
 import { useRouter } from 'next/router';
 import ShowNotification from '@/controller/NotificationController';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
 import { Button, Comp } from '@/components/component';
+import { From } from '@/database/api';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -23,7 +24,6 @@ export default function index() {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
-    ShowNotification('info', 'In Progress', 'This Page is still in progress...')
   }, [])
 
   // TODO: Your custom logic starts here...
@@ -32,6 +32,21 @@ export default function index() {
     localStorage.setItem('theme', newTheme.className)
     setTheme(newTheme)
     console.log(newTheme.background);
+  }
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    const res = await From.Rest.fetchData("/newsletter", "POST", {
+      header,
+      body
+    }, Auth.getToken())
+    if(res.success) {
+      ShowNotification("success", "Success", res.data.status)
+    }
+    else {
+      ShowNotification("danger", "Error", res.data)
+      console.error(res.data);
+    }
   }
 
   // TODO: Your React Element Starts here
@@ -48,7 +63,7 @@ export default function index() {
           <SidebarTemplate>
             <div className='center'>
               <Comp.H1>Manage News Letter</Comp.H1>
-              <form className='center'>
+              <form className='center' onSubmit={handleSubmit}>
                 <table>
                   <tbody>
                     <tr>
@@ -61,7 +76,7 @@ export default function index() {
                     </tr>
                   </tbody>
                 </table>
-                <Button.Blue>Send Email</Button.Blue>
+                <Button.Blue type='submit'>Send Email</Button.Blue>
               </form>
             </div>
           </SidebarTemplate>          

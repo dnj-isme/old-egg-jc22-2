@@ -15,7 +15,9 @@ declare global {
   var unban: boolean
   var checkout: boolean
   var reset: boolean
+  var wishlist: boolean
 }
+global.wishlist = false
 global.debug = true
 global.reset = false
 global.checkout = false

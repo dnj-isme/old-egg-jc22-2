@@ -1,4 +1,5 @@
 import { Theme, ThemeContext } from "@/contexts/ThemeContext"
+import { Icon } from "@iconify/react"
 import { ButtonHTMLAttributes, MouseEvent, useContext } from "react"
 import btn_style from "./button-component.module.scss"
 
@@ -71,27 +72,27 @@ export interface ButtonParams {
 }
 
 export const Button = {
-  Save: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
+  Save: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
     return <button className={btn_style.save} type="submit" onClick={onClick}>Save</button>
   },
   
-  New: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
+  New: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
     return <button className={btn_style.new} type="button" onClick={onClick}>New</button>
   },
 
-  Send: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
-    return <button className={btn_style.send} type="submit" onClick={onClick}>Send</button>
+  Send: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
+    return <button className={btn_style.send} type="submit" onClick={onClick}><Icon icon="ic:sharp-send" /></button>
   },
 
-  Edit: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
+  Edit: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
     return <button className={btn_style.edit} type="button" onClick={onClick}>Edit</button>
   },
 
-  Delete: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
+  Delete: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
     return <button className={btn_style.delete} type="button" onClick={onClick}>Delete</button>
   },
 
-  Cancel: ({onClick} : {onClick : (e: MouseEvent) => any}) => {
+  Cancel: ({onClick} : {onClick? : (e: MouseEvent) => any}) => {
     return <button className={btn_style.cancel} type="reset" onClick={onClick}>Cancel</button>
   },
   

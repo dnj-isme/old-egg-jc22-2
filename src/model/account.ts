@@ -8,6 +8,7 @@ export interface Account {
   subscribe: boolean
   verified: boolean
   business: boolean
+  egg_currency: number
   status: "active" | "disabled"
 }
 

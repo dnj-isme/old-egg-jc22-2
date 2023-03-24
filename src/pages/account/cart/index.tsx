@@ -15,6 +15,7 @@ import { SampleQuery } from '@/database/query';
 import { CartItem } from '@/model/cart';
 import { ProductCard } from '@/components/product/card';
 import SidebarTemplate from '@/components/base';
+import { Account } from '@/model/account';
 
 export default function index() {
   // TODO: Your hooks starts here
@@ -27,9 +28,10 @@ export default function index() {
   const [total, setTotal] = useState(formatNumber(getTotalPrice()))
   const [discounted, setDiscounted] = useState(formatNumber(getDiscountedPrice()))
   const [final, setFinal] = useState(formatNumber(getTotalPrice() - getDiscountedPrice()))
+  
+  const [account, setAccount] = useState<Account | null>(null)
 
-  const [voucher, setVoucher] = useState('')
-  const [payment, setPayment] = useState('')
+  const [payment, setPayment] = useState('EggCurrency')
   const [delivery, setDelivery] = useState('')
 
   // TODO: Your useEffect starts here
@@ -38,6 +40,7 @@ export default function index() {
     const sessionTheme = getTheme(localStorage.getItem('theme'))
     localStorage.setItem('theme', sessionTheme.className)
     setTheme(sessionTheme)
+    Auth.getActiveAccount().then(acc => setAccount(acc))
   }, [])
 
   async function fetchCart() {
@@ -129,7 +132,7 @@ export default function index() {
       const res = await From.Rest.fetchData("/account/order/cart", "PATCH", {
         account_id: acc.id,
         product_id: item.product?.id,
-        quantity: item.quantity
+        quantity: item.quantity,
       }, Auth.getToken())
 
       if(!res.success) {
@@ -141,12 +144,17 @@ export default function index() {
 
     if(success) {
       const res = await From.Rest.fetchData("/account/order/checkout", "POST", {
-        account_id: acc.id
+        account_id: acc.id,
+        payment,
+        delivery
       }, Auth.getToken())
 
       if(res.success) {
         global.checkout = true
         router.push("/")
+      }
+      else {
+        ShowNotification("danger", "Failed", res.data)
       }
     }
   }
@@ -166,16 +174,9 @@ export default function index() {
     setmodal({display: "none"})
   }
 
-  function handleCheckVoucher(e: MouseEvent) {
-    e.preventDefault()
-    NotificationTemplate.InProgress("Check Voucher")
-  }
-
-
-
   // TODO: Your React Element Starts here
   const [modal,setmodal] = useState({
-    display: "none"
+    display: "none",
   })
 
   return (
@@ -226,30 +227,24 @@ export default function index() {
               <div className={style.Form}>
                 <div className={style.FormContainer}>
                   <div className={style.FormSelect}>
-                    <Comp.H1>Total Price</Comp.H1>
-                    <Comp.P>{final}</Comp.P>
+                    <h3>Total Price</h3>
+                    <p>{final}</p>
                   </div>
                   <div className={style.FormSelect}>
                     <h3>Delivery</h3>
-                    <select onChange={e => setDelivery(e.target.value)} name="" id="">
-                      <option value="jne">Jne</option>
-                      <option value="jnt">JnT</option>
-                    </select>
+                    <input type="text" name="address" id="address" onChange={e => setDelivery(e.target.value)} />
                   </div>
                   <div className={style.FormSelect}>
                     <h3>Payment</h3>
-                    <select name="payment" id="payment" onChange={e => setPayment(e.target.value)}>
-                      <option value="wallet">Wallet</option>
+                    <select name="payment" id="payment" value={payment} onChange={e => setPayment(e.target.value)}>
+                      <option value="EggCurrency">Wallet</option>
                       <option value="cod">CoD</option>
                       <option value="e-banking">E-Banking</option>
                     </select>
-                  </div>
-                  <div className={style.FormSelect}>
-                    <h3>Voucher</h3>
-                    <div className={style.oneline}>
-                      <input type="text" placeholder='Input Voucher' onChange={e => setVoucher(e.target.value)}/>
-                      <Button.Blue onClick={handleCheckVoucher}>Check</Button.Blue>
-                    </div>
+                    {
+                      payment !== "EggCurrency" ? null:
+                      <p>Your Wallet : {account?.egg_currency}</p>
+                    }
                   </div>
                   <div className={style.SaveButton}>
                     <Button.Blue type='submit' onClick={handleSubmit}>Submit</Button.Blue>

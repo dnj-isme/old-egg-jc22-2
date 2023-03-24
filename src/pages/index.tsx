@@ -93,7 +93,7 @@ export default function HomePage() {
             <Comp.H2>Subscribe to newsletter</Comp.H2>
             <div>
               <input type="email" name="email" id="email" placeholder='email' onChange={e => setEmail(e.target.value)}/>
-              <Button.Submit><Icon icon="ic:sharp-send" /></Button.Submit>
+              <Button.Send />
             </div>
           </form>
         </div>

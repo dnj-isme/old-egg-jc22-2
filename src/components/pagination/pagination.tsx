@@ -7,7 +7,7 @@ import style from "./style.module.scss"
 interface Params {
   totalPages: number,
   pagination: Pagination,
-  filter: FilterInput
+  filter?: FilterInput
 }
 
 export function PaginationLink(props: Params) {
@@ -89,7 +89,7 @@ export function PaginationLink(props: Params) {
     </ul>
   )
 }
-function Link({page, curr, pagination, filter}: {page: number, curr: number, pagination: Pagination, filter: FilterInput}) {  
+function Link({page, curr, pagination, filter}: {page: number, curr: number, pagination: Pagination, filter?: FilterInput}) {  
 
   let targetPaginate: Pagination = {
     contentsPerPage: pagination.contentsPerPage,

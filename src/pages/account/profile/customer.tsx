@@ -2,13 +2,14 @@ import { DEFAULT_THEME, getTheme, Theme, ThemeContext, ThemeType } from '@/conte
 import { Auth } from '@/controller/Auth';
 import { useRouter } from 'next/router';
 import ShowNotification from '@/controller/NotificationController';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { ReactNotifications } from 'react-notifications-component';
 import SidebarTemplate from '@/components/base';
-import { Comp } from '@/components/component';
+import { Button, Comp } from '@/components/component';
 import { Account } from '@/model/account';
+import { From } from '@/database/api';
 
 export default function customer() {
   // TODO: Your hooks starts here
@@ -26,6 +27,15 @@ export default function customer() {
     fetchAccount()
   }, [])
 
+  useEffect(() => {
+    if(account) {
+      setFirstName(account.first_name)
+      setLastName(account.last_name)
+      setEmail(account.email)
+      setPhone(account.phone)
+    }
+  }, [account])
+
   async function fetchAccount() {
     const account = await Auth.getActiveAccount()
     setAccount(account)
@@ -35,6 +45,12 @@ export default function customer() {
     }
   }
 
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+
   // TODO: Your custom logic starts here...
 
   function changeTheme() {
@@ -42,6 +58,27 @@ export default function customer() {
     localStorage.setItem('theme', newTheme.className)
     setTheme(newTheme)
     console.log(newTheme.background);
+  }
+
+  async function saveNewProfile(e: FormEvent) {
+    e.preventDefault()
+
+    const res = await From.Rest.fetchData("/account", "PATCH", {
+      account_id: account?.id,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      phone
+    })
+
+    if(res.success) {
+      ShowNotification("success", "Success", res.data.status)
+      Auth.setToken(res.data.token)
+    }
+    else {
+      ShowNotification("danger", "Failed!", res.data)
+    }
   }
 
   // TODO: Your React Element Starts here
@@ -57,26 +94,37 @@ export default function customer() {
           <SidebarTemplate>
             <div className='center'>
               <Comp.H1>Profile Page</Comp.H1>
-              <table>
-                <tbody>
-                  <tr>
-                    <td><label htmlFor="first_name">First Name</label></td>
-                    <td><input id='first_name' type="text" value={account?.first_name}/></td>
-                  </tr>
-                  <tr>
-                    <td><label htmlFor="last_name">Last Name</label></td>
-                    <td><input id='last_name' type="text" value={account?.last_name}/></td>
-                  </tr>
-                  <tr>
-                    <td><label htmlFor="email">Email</label></td>
-                    <td><input id='email' type="text" value={account?.email}/></td>
-                  </tr>
-                  <tr>
-                    <td><label htmlFor="phone">Phone</label></td>
-                    <td><input id='phone' type="text" value={account?.first_name}/></td>
-                  </tr>
-                </tbody>
-              </table>
+              <form onSubmit={saveNewProfile} className="center">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><Comp.Label htmlFor="first_name">First Name</Comp.Label></td>
+                      <td><input id='first_name' type="text" value={firstName} onChange={e => setFirstName(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.Label htmlFor="last_name">Last Name</Comp.Label></td>
+                      <td><input id='last_name' type="text" value={lastName} onChange={e => setLastName(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.Label htmlFor="email">Email</Comp.Label></td>
+                      <td><input id='email' type="text" value={email} onChange={e => setEmail(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.Label htmlFor="phone">Phone</Comp.Label></td>
+                      <td><input id='phone' type="text" value={phone} onChange={e => setPhone(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.Label htmlFor="password">Password</Comp.Label></td>
+                      <td><input id='password' type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder='Input Password to Proceed'/></td>
+                    </tr>
+                    <tr>
+                      <td><Comp.P>Egg Currency</Comp.P></td>
+                      <td><Comp.P>{account?.egg_currency}</Comp.P></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Button.Save />
+              </form>
             </div>
           </SidebarTemplate>
           <Footer />

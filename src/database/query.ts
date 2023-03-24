@@ -357,6 +357,250 @@ export const SampleQuery = (function (){
     `
   }
 
+  const wishlist_data = `
+    id
+    title
+    description
+    public_wishlist
+    promo
+    total_price
+    account {
+      id
+      first_name
+      email
+    }
+    details {
+      product {
+        id
+        product_name
+        product_price
+        discount
+        product_images {
+          image_link
+        }
+      }
+      quantity
+    }
+    reviews {
+      account {
+        id
+        first_name
+        email
+      }
+      anonymous
+      rating
+      detail
+    }
+  `
+
+  const followedWishlists: Query = {
+    functionName: "followedWishlists",
+    query: `
+      query($account_id: String!) {
+        followedWishlists(account_id: $account_id) {
+          id
+          note
+          wishlist {
+            ${wishlist_data}
+          }
+        }
+      }
+    `
+  }
+
+  const wishlists: Query = {
+    functionName: "wishlists",
+    query: `
+      query($pagination: PaginationInput, $filter: WishlistFilterInput) {
+        wishlists(pagination: $pagination, filter: $filter) {
+          ${wishlist_data}
+        }
+      }
+    `
+  }
+
+  const wishlistByID: Query = {
+    functionName: "wishlist",
+    query: `
+      query($id: String!) {
+        wishlist(id: $id) {
+          ${wishlist_data}
+        }
+      }
+    `
+  }
+
+  const countWishlist: Query = {
+    functionName: "countWishlists",
+    query: `
+      query($filter: WishlistFilterInput) {
+        countWishlists(filter: $filter)
+      }
+    `
+  }
+
+  const transactionDetail = `
+    id,
+    created_at,
+    account {
+      id,
+      first_name
+    }
+    payment_method
+    status
+    details {
+      product {
+        id,
+        product_name
+        store {
+          id
+          account {
+            first_name
+          }
+        }
+        product_price
+        discount
+        product_images {
+          image_link
+        }
+      }
+      quantity
+      status
+    }
+  `
+
+  const transactionsByID: Query = {
+    functionName: "transactions",
+    query: `
+      query($id: String!) {
+        transactions(account_id: $id) {
+          ${transactionDetail}
+        }
+      }
+    `
+  }
+
+  const transaction: Query = {
+    functionName: "transaction",
+    query: `
+      query($id: String!) {
+        transaction(id: $id) {
+          ${transactionDetail}
+        }
+      }
+    `
+  }
+
+  const vouchers: Query = {
+    functionName: "vouchers",
+    query: `
+      query {
+        vouchers {
+          id
+          title
+          description
+          value
+          used
+          one_time
+          valid_until
+        }
+      }
+    `
+  }
+
+  const storeReviewsByAccount: Query= {
+    functionName: "storeReviewsByCustomer",
+    query: `
+      query($id: String!) {
+        storeReviewsByCustomer(account_id: $id) {
+          id
+          store {
+            id
+            account {
+              id
+              first_name
+            }
+          }
+          description
+          rating
+          created_at
+          helpful
+          notHelpful
+        }
+      }
+    `
+  }
+
+  const wishlistReviewsByAccount: Query = {
+    functionName: "wishlistReviewsByCustomer",
+    query: `
+      query($id: String!) {
+        wishlistReviewsByCustomer(account_id: $id) {
+          id
+          wishlist {
+            id
+            title
+          }
+          rating
+          detail
+          anonymous
+        }
+      }
+    `
+  }
+
+  const chats: Query = {
+    functionName: "chats",
+    query: `
+      query ($id: String!) {
+        chats(account_id: $id) {
+          participants {
+            id,
+            first_name
+          }
+          messages {
+            id
+            message
+            sender {
+              id
+              first_name
+            }
+            receiver {
+              id
+              first_name
+            }
+          }
+        }
+      }
+    `
+  }
+
+  const allChats: Query = {
+    functionName: "chats",
+    query: `
+      query ($email:String!, $password:String!) {
+        viewAllChats(email: $email, password: $password) {
+          participants {
+            id,
+            first_name
+          }
+          messages {
+            id
+            message
+            sender {
+              id
+              first_name
+            }
+            receiver {
+              id
+              first_name
+            }
+          }
+        }
+      }
+    `
+  }
+
   return {
     banner, 
     stores, 
@@ -371,6 +615,17 @@ export const SampleQuery = (function (){
     productsByStoreID,
     countProducts,
     storeReviewsByStoreID,
-    viewStoreReviewUsefulness
+    viewStoreReviewUsefulness,
+    wishlists,
+    wishlistByID,
+    countWishlist,
+    transactionsByID,
+    transaction,
+    followedWishlists,
+    vouchers,
+    storeReviewsByAccount,
+    wishlistReviewsByAccount,
+    chats,
+    allChats
   }
 })()

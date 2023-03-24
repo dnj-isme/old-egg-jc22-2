@@ -1,0 +1,71 @@
+.form {
+  * {
+    margin-bottom: 0.5rem;
+  }
+  input, button {
+    font-size: 15px;
+    padding: 12px 15px;
+    width: 20rem;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .submit {
+    border-color: #d60;
+    background-color: #ffa33a;
+    color: #222;
+    font-weight: bolder;
+  }
+
+  .submit:hover {
+    background-color: #ff8800;
+  }
+  .na {
+    width: inherit;
+    height: inherit;
+    margin: 1rem;
+  }
+}
+
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba($color: #000000, $alpha: 0.8);
+
+  .exit {
+    position: fixed;
+    align-self: flex-end;
+    margin-right: 1rem;
+  }
+
+  .detail {
+    position: fixed;
+    width: 32vw;
+    padding: 2rem 1rem;
+    height: auto;
+    border-radius: 1.2rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    td {
+      padding-top: 0.2rem;
+      padding-bottom: 0.4rem;
+    }
+    input, textarea {
+      width: 20rem;
+      resize: vertical;
+
+      &[type=checkbox] {
+        width: auto;
+      }
+    }
+  }
+}

@@ -33,7 +33,11 @@ export const Auth = (function() {
 
   function setToken(token: string) {
     const cookies = new Cookies()
-    cookies.set("token", token)
+
+    let expires = new Date(Date.now())
+    expires.setMinutes(expires.getMinutes() + 15);
+
+    cookies.set("token", token, {expires: expires, path: "/"});
   }
 
   function getToken() {

@@ -251,6 +251,7 @@ export default function Navbar({changeTheme}: {changeTheme: () => any}) {
         <ListItem href="/best-deals">{language.deals}</ListItem>
         <ListItem href="/best-seller">{language.seller}</ListItem>
         <ListItem href="/build-pc">{language.build}</ListItem>
+        <ListItem href="/wishlist">Public Wishlist</ListItem>
         <li><Comp.P>{language.category}</Comp.P></li>
         {categories.map(data =>(
           <ListItem href={"/search?category_id=" + data.id}>{data.category_name}</ListItem>

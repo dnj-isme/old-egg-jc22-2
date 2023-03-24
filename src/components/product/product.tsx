@@ -2,11 +2,13 @@ import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/The
 import { Auth } from '@/controller/Auth';
 import { CartController } from '@/controller/CartController';
 import ShowNotification from '@/controller/NotificationController';
+import { From } from '@/database/api';
 import { Account } from '@/model/account';
 import { Product } from '@/model/product';
 import { useRouter } from 'next/router';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, MouseEvent, useContext, useEffect, useState } from 'react';
 import { Button, Comp } from '../component';
+import AddToWishlist from './AddToWishlist';
 
 import style from './product.module.scss'
 
@@ -80,6 +82,8 @@ export const ProductDisplay = {
     const [account, setAccount] = useState<Account | null>(null)
     const [added, setAdded] = useState(false)
 
+    const [display, setDisplay] = useState('none')
+
     useEffect(() => {effect()}, [])
 
     async function effect() {
@@ -113,6 +117,15 @@ export const ProductDisplay = {
       }
     }
 
+    function handleWishlist(e: MouseEvent) {
+      e.preventDefault()
+      setDisplay("block")
+    }
+
+    function handleExit() {
+      setDisplay("none")
+    }
+
     return (
       <div className={style.action}>
         <div className={style.price}>
@@ -123,11 +136,20 @@ export const ProductDisplay = {
           <div>
             <input type="number" value={qty} name="qty" id="qty" min={0} step={1} onChange={e => setQty(parseInt(e.target.value))} />
           </div>
-          <Button.Yellow onClick={handleAddToCart}>{account ? `Add to Cart ›` : "Sign in to add to cart"}</Button.Yellow>
+          <div>
+            <Button.Yellow onClick={handleAddToCart}>{account ? `Add to Cart ›` : "Sign in to add to cart"}</Button.Yellow>
+          </div>
+          <div>
+            <Button.Blue onClick={handleWishlist}>Add to Wishlist</Button.Blue>
+          </div>
           <div>
             {added ? <Comp.A href="/account/cart">View Cart</Comp.A> : null}
           </div>
         </form>
+        {
+          !account ? null :  
+          <AddToWishlist display={display} onExit={handleExit} product={props.product} account={account}/>
+        }
       </div>
     )
   }

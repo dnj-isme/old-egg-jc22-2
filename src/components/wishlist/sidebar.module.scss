@@ -1,0 +1,24 @@
+.component {
+  display: flex;
+  flex-direction: row;
+  .left {
+    width: 25vw;
+  }
+  .right {
+    width: 75vw;
+    padding: 2rem 0.5rem;
+
+  }
+}
+
+.list {
+  list-style-type: none;
+  li {
+    margin-top: 0.2rem;
+    padding-bottom: 0.4rem;
+
+    textarea, input:not([type=checkbox]) {
+      width: 15rem;
+    }
+  }
+}

@@ -14,3 +14,15 @@ export interface FilterInput {
   order_by_review?: string // ASC / DESC
   order_by_bought?: string // ASC / DESC
 }
+
+export interface WishlistFilterInput {
+  id?: String
+  wishlist_id?: String
+  search?: String
+  rating?: number
+
+  public?: Boolean
+  account_id?: String
+
+  order_by_rating?: String
+}
