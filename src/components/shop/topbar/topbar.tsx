@@ -2,10 +2,11 @@ import { DEFAULT_THEME, getTheme, ThemeContext, ThemeType } from '@/contexts/The
 import ShowNotification from '@/controller/NotificationController';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
 import { Comp } from '@/components/component';
 
 import style from './topbar.module.scss'
+import { Auth } from '@/controller/Auth';
 
 export default function Topbar({id}: {id: string}) {
   // TODO: Your hooks starts here...
@@ -15,8 +16,17 @@ export default function Topbar({id}: {id: string}) {
   // TODO: Put UseState Stuff here
 
   // TODO: Put Your Custom Logic here
-  function navigate(url: string) {
-    router.push("/shop/manage/" + url)
+  async function handleChat(e: MouseEvent) {
+    e.preventDefault()
+    const acc = await Auth.getActiveAccount()
+
+    if(!acc) {
+      router.push("/auth/signin")
+    }
+    else {
+      sessionStorage.setItem("chat-target", id)
+      router.push("/account/chat")
+    }
   }
 
   // TODO: Your React Element starts here...
@@ -27,6 +37,7 @@ export default function Topbar({id}: {id: string}) {
       <a style={{color: theme.textColor}} href={"/shop/" + id + "/review"} className={style.link}>Reviews</a>
       <a style={{color: theme.textColor}} href={"/shop/" + id + "/return-policy"} className={style.link}>Return Policy</a>
       <a style={{color: theme.textColor}} href={"/shop/" + id + "/about"} className={style.link}>About Us</a>
+      <a style={{color: theme.textColor}} onClick={handleChat} href={"/account/chat"} className={style.link}>Contact Us</a>
     </div>
   )
 }

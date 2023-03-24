@@ -549,26 +549,20 @@ export const SampleQuery = (function (){
     `
   }
 
-  const chats: Query = {
-    functionName: "chats",
+  const messages: Query = {
+    functionName: "messages",
     query: `
       query ($id: String!) {
-        chats(account_id: $id) {
-          participants {
-            id,
+        messages(account_id: $id) {
+          id
+          message
+          sender {
+            id
             first_name
           }
-          messages {
+          receiver {
             id
-            message
-            sender {
-              id
-              first_name
-            }
-            receiver {
-              id
-              first_name
-            }
+            first_name
           }
         }
       }
@@ -601,6 +595,25 @@ export const SampleQuery = (function (){
     `
   }
 
+  const accountByID: Query = {
+    functionName: "account",
+    query: `
+      query($id: String!) {
+        account(id: $id) {
+          id
+          first_name
+          last_name
+          email
+          phone
+          subscribe
+          business
+          status
+          egg_currency
+        }
+      }
+    `
+  }
+
   return {
     banner, 
     stores, 
@@ -625,7 +638,8 @@ export const SampleQuery = (function (){
     vouchers,
     storeReviewsByAccount,
     wishlistReviewsByAccount,
-    chats,
-    allChats
+    messages,
+    allChats,
+    accountByID
   }
 })()

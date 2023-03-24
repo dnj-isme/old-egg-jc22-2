@@ -48,7 +48,7 @@ export default function index() {
           <Navbar changeTheme={changeTheme}/>
           <SidebarTemplate>
             <div className='center'>
-              <Comp.H1>Chat Page</Comp.H1>
+              <Comp.H1>Manage Chat Page</Comp.H1>
               <ChatElement admin/>
             </div>
           </SidebarTemplate>

@@ -11,8 +11,8 @@ import style from "./style.module.scss"
 interface Props {
   account?: Account | null
   alt?: string
-  class: string
   message: string
+  class: string
 }
 
 export default function ChatBubble(props: Props) {

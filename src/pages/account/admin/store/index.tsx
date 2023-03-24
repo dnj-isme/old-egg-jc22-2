@@ -129,6 +129,7 @@ export default function Shop(props: Params) {
     <Auth.Protection
       // TODO: Put Your Authentication Rule here...
       MustAdmin
+      MustLogin
     >
       <ThemeContext.Provider value={theme}>
         <ReactNotifications />
